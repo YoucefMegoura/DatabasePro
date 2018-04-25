@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_margin="5dp">
+
+    <TextView
+        android:id="@+id/id_niveau"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="0"
+        android:textAlignment="center"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/nom_niveau"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/id_niveau"
+        android:layout_toStartOf="@+id/score_niveau"
+        android:text="nom_pers"
+        android:textSize="35dp" />
+
+    <TextView
+        android:id="@+id/score_niveau"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:text="00"
+        android:textAlignment="center"
+        android:textSize="30dp" />
+</RelativeLayout>
