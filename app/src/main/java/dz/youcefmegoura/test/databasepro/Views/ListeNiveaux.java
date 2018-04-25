@@ -85,6 +85,7 @@ public class ListeNiveaux extends AppCompatActivity {
                     //Toast.makeText(Main.this, LevelScore_array.get(position).getName(), Toast.LENGTH_SHORT).show();
                     Bundle bundle = new Bundle();
                     bundle.putInt("id_niveau", ListeNiveaux_array.get(position).getId_niveau());
+                    bundle.putInt("id_categorie", id_categorie_from_bundle);
                     Intent intent = new Intent(ListeNiveaux.this, ImageGame.class);
                     intent.putExtras(bundle);
                     startActivity(intent);

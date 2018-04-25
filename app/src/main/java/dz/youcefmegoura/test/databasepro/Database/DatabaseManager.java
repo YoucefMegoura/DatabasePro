@@ -29,17 +29,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String strSql_categorie = "CREATE TABLE categorie ("
-                + "    id_categorie INTEGER NOT NULL UNIQUE,"
-                + "    nom_categorie TEXT NOT NULL,"
-                + "    score_categorie INTEGER NOT NULL DEFAULT 0,"
+                + "     id_categorie INTEGER NOT NULL UNIQUE,"
+                + "     nom_categorie TEXT NOT NULL,"
+                + "     score_categorie INTEGER NOT NULL DEFAULT 0,"
                 + "     PRIMARY KEY(id_categorie)"
                 + ") WITHOUT ROWID;";
         db.execSQL( strSql_categorie );
 
         String strSql_niveau = "CREATE TABLE niveau ("
-                + "    id_niveau INTEGER NOT NULL UNIQUE,"
-                + "    nom_niveau TEXT NOT NULL,"
-                + "    score_niveau INTEGER NOT NULL DEFAULT 0,"
+                + "     id_niveau INTEGER NOT NULL UNIQUE,"
+                + "     nom_niveau TEXT NOT NULL,"
+                + "     score_niveau INTEGER NOT NULL DEFAULT 0,"
                 + "     id_categorie INTEGER NOT NULL,"
                 + "     PRIMARY KEY(id_niveau),"
                 + "     FOREIGN KEY(id_categorie) REFERENCES categorie(id_categorie)"
@@ -53,7 +53,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 + "      nom_image TEXT NOT NULL,"
                 + "      score_image INTEGER DEFAULT (0),"
                 + "      url_image    TEXT,"
-                + "      id_niveau INTEGER NOT NULL,"
+                + "      id_niveau INTEGER NOT NULL ,"
                 + "      id_categorie INTEGER NOT NULL,"
                 + "      PRIMARY KEY (id_image),"
                 +"       FOREIGN KEY (id_niveau) REFERENCES niveau (id_niveau),"
@@ -93,11 +93,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
 
     /********************************selection***********************/
-    public ArrayList<Image> readFrom_ImageTable_where_categorie_and_niveau(){
+    public ArrayList<Image> readFrom_ImageTable_where_categorie_and_niveau(int id_categorie, int id_niveau){
         ArrayList<Image> arrayList_Images = new ArrayList<>();
         Cursor cursor = this.getReadableDatabase().query( "image",
                 new String[] { "id_image", "nom_image", "score_image", "url_image", "id_niveau", "id_categorie" },
-                null, null, null, null, null, null );
+                "id_niveau = " + id_niveau + " and id_categorie = " + id_categorie, null, null, null, null, null );
         cursor.moveToFirst();
         while( ! cursor.isAfterLast() ) {
             Image image = new Image( cursor.getInt( 0 ), cursor.getString( 1 ),

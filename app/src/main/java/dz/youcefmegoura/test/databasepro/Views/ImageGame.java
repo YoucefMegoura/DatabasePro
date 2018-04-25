@@ -16,6 +16,9 @@ import dz.youcefmegoura.test.databasepro.R;
 
 public class ImageGame extends AppCompatActivity {
 
+    private int id_categorie_from_bundle;
+    private int id_niveau_from_bundle;
+
     private DatabaseManager databaseManager;
     private ArrayList<Image> Images_array;
 
@@ -31,16 +34,27 @@ public class ImageGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_game);
 
+        /**********************************************/
         score_text_view = (TextView) findViewById(R.id.score_text_view);
         image_view = (ImageView) findViewById(R.id.image_view);
         nom_image_textView = (TextView) findViewById(R.id.nom_image_textView);
         edit_text = (EditText) findViewById(R.id.edit_text);
+        /**********************************************/
+
+
+        /*****************Get from Bundle****************/
+        Bundle bundle = getIntent().getExtras();
+        id_categorie_from_bundle = bundle.getInt("id_categorie");
+        id_niveau_from_bundle = bundle.getInt("id_niveau");
+        /************************************************/
+
 
         databaseManager = new DatabaseManager(this);
-        Images_array = new ArrayList<>(databaseManager.readFrom_ImageTable_where_categorie_and_niveau());
+        Images_array = new ArrayList<>(databaseManager.readFrom_ImageTable_where_categorie_and_niveau(id_categorie_from_bundle, id_niveau_from_bundle));
         cursseur_id_array_image = Images_array.get(0).getId_image();
         afficher_imageObject(cursseur_id_array_image);
     }
+
 
     public void afficher_imageObject(int cursseur_id_array_image){
         score_text_view.setText("Score : " + String.valueOf(Images_array.get(cursseur_id_array_image).getScore_image()));
