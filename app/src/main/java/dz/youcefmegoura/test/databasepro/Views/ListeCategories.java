@@ -32,9 +32,6 @@ public class ListeCategories extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Categories_array = new ArrayList<Categorie>(databaseManager.readFrom_CategorieTable()) ;
-
-
-
         CustAdapt cus = new CustAdapt(Categories_array);
         ListView ls = (ListView) findViewById(R.id.liste_view_categorie);
         ls.setAdapter(cus);

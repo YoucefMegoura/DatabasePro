@@ -17,10 +17,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         databaseManager = new DatabaseManager(this);
-
-        //databaseManager.insertScore(1,"nom_cat",  500);
     }
 
+    // onCLick Button
     public void ClickBtn(View view) {
         startActivity(new Intent(this, ListeCategories.class));
     }
