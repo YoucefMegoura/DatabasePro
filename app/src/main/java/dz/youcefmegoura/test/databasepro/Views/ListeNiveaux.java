@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -19,10 +18,8 @@ import dz.youcefmegoura.test.databasepro.R;
 
 public class ListeNiveaux extends AppCompatActivity {
 
-    ArrayList<Niveau> ListeNiveaux_array = new ArrayList<>();
-    //TextView textView_main;
+    private ArrayList<Niveau> ListeNiveaux_array = new ArrayList<>();
     private DatabaseManager databaseManager;
-
     private int id_categorie_from_bundle;
 
     @Override
@@ -31,18 +28,23 @@ public class ListeNiveaux extends AppCompatActivity {
         setContentView(R.layout.activity_liste_niveaux);
         databaseManager = new DatabaseManager( this );
 
+        /*****************Get from Bundle****************/
         Bundle bundle = getIntent().getExtras();
         id_categorie_from_bundle = bundle.getInt("id_categorie");
+        /************************************************/
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         ListeNiveaux_array = new ArrayList<Niveau>(databaseManager.readFrom_NiveauTable_where_categorie(id_categorie_from_bundle)) ;
 
         CustAdapt cus = new CustAdapt(ListeNiveaux_array);
         ListView ls = (ListView) findViewById(R.id.list_view_niveau);
         ls.setAdapter(cus);
-        //textView_main.setText(String.valueOf(databaseManager.calculateScore()));
         databaseManager.close();
     }
-
 
     class CustAdapt extends BaseAdapter {
 

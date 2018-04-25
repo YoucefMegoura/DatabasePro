@@ -163,6 +163,57 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 cursor.getInt( 2 ), cursor.getString(3)  );
         return image;
     }
+
+    public int score_images_dans_niveau(int id_categorie, int id_niveau){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        int score_image = 0;
+
+        Cursor cursor = this.getReadableDatabase().query( "image",
+                new String[] { "score_image" },
+                "id_niveau = " + id_niveau + " and id_categorie = " + id_categorie, null, null, null, null, null );
+        cursor.moveToFirst();
+        while( ! cursor.isAfterLast() ) {
+            score_image = score_image + cursor.getInt( 0 );
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return score_image;
+    }
+
+    public int score_niveaux_dans_categorie(int id_categorie){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        int score_niveau = 0;
+
+        Cursor cursor = this.getReadableDatabase().query( "niveau",
+                new String[] { "score_niveau" },
+                "id_categorie = " + id_categorie, null, null, null, null, null );
+        cursor.moveToFirst();
+        while( ! cursor.isAfterLast() ) {
+            score_niveau = score_niveau + cursor.getInt( 0 );
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return score_niveau;
+    }
+
+    public void changer_score_niveau(int id_niveau, int nouveau_score_niveau){
+        String strSql = "UPDATE 'niveau' SET 'score_niveau'=" + nouveau_score_niveau + " WHERE id_niveau=" + id_niveau + ";";
+        this.getWritableDatabase().execSQL(strSql);
+        Log.i( "DATABASE", "ChangeScore invoked 0" );
+    }
+
+    public void changer_score_categorie(int id_categorie, int nouveau_score_categorie){
+        String strSql = "UPDATE 'categorie' SET 'score_categorie'=" + nouveau_score_categorie + " WHERE id_categorie=" + id_categorie + ";";
+        this.getWritableDatabase().execSQL(strSql);
+
+    }
+
+
+
     /*
     public ArrayList<LevelScore> readTop10() {
         ArrayList<LevelScore> scores = new ArrayList<>();

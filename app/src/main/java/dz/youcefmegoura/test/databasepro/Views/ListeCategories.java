@@ -1,6 +1,5 @@
 package dz.youcefmegoura.test.databasepro.Views;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
 import dz.youcefmegoura.test.databasepro.Database.DatabaseManager;
@@ -21,29 +19,28 @@ import dz.youcefmegoura.test.databasepro.R;
 public class ListeCategories extends AppCompatActivity {
 
     private  ArrayList<Categorie> Categories_array = new ArrayList<>();
-    //TextView textView_main;
-
     private DatabaseManager databaseManager;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_categories);
-
         databaseManager = new DatabaseManager( this );
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         Categories_array = new ArrayList<Categorie>(databaseManager.readFrom_CategorieTable()) ;
+
+
 
         CustAdapt cus = new CustAdapt(Categories_array);
         ListView ls = (ListView) findViewById(R.id.liste_view_categorie);
         ls.setAdapter(cus);
-        //textView_main.setText(String.valueOf(databaseManager.calculateScore()));
         databaseManager.close();
 
     }
-
 
     class CustAdapt extends BaseAdapter {
 

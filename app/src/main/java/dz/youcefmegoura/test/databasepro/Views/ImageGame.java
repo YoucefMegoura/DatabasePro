@@ -23,18 +23,18 @@ public class ImageGame extends AppCompatActivity {
     private ArrayList<Image> Images_array;
 
     private int cursseur_id_array_image;
+    private int indice;
 
     ImageView image_view;
     TextView score_text_view, nom_image_textView;
     EditText edit_text;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_game);
 
-        /**********************************************/
+        /***************XML References******************/
         score_text_view = (TextView) findViewById(R.id.score_text_view);
         image_view = (ImageView) findViewById(R.id.image_view);
         nom_image_textView = (TextView) findViewById(R.id.nom_image_textView);
@@ -49,45 +49,51 @@ public class ImageGame extends AppCompatActivity {
         /************************************************/
 
 
+        indice = 0;
         databaseManager = new DatabaseManager(this);
         Images_array = new ArrayList<>(databaseManager.readFrom_ImageTable_where_categorie_and_niveau(id_categorie_from_bundle, id_niveau_from_bundle));
-        cursseur_id_array_image = Images_array.get(0).getId_image();
-        afficher_imageObject(cursseur_id_array_image);
+        cursseur_id_array_image = Images_array.get(indice).getId_image();
+        afficher_imageObject(indice);
     }
 
-
     public void afficher_imageObject(int cursseur_id_array_image){
-        score_text_view.setText("Score : " + String.valueOf(Images_array.get(cursseur_id_array_image).getScore_image()));
-        int drawableResourceId = this.getResources().getIdentifier(Images_array.get(cursseur_id_array_image).getUrl_image(), "drawable", this.getPackageName());
+        score_text_view.setText("Score : " + String.valueOf(Images_array.get(indice).getScore_image()));
+        int drawableResourceId = this.getResources().getIdentifier(Images_array.get(indice).getUrl_image(), "drawable", this.getPackageName());
         image_view.setImageResource(drawableResourceId);
-        nom_image_textView.setText("Nom image : " + Images_array.get(cursseur_id_array_image).getNom_image());
+        nom_image_textView.setText("Nom image : " + Images_array.get(indice).getNom_image());
     }
 
     public void saveClick(View view) {
         if (edit_text.getText().toString().length() != 0){
-            int score = Integer.valueOf(edit_text.getText().toString());
-            databaseManager.changer_score_image(cursseur_id_array_image, score);
+            int new_score = Integer.valueOf(edit_text.getText().toString());
+            databaseManager.changer_score_image(cursseur_id_array_image, new_score);
             score_text_view.setText("Score : " + edit_text.getText().toString());
+
+            int score_images_dans_niveau = databaseManager.score_images_dans_niveau(id_categorie_from_bundle, id_niveau_from_bundle);
+            databaseManager.changer_score_niveau(id_niveau_from_bundle, score_images_dans_niveau);
+
+            int score_niveau_dans_categorie = databaseManager.score_niveaux_dans_categorie(id_categorie_from_bundle);
+            databaseManager.changer_score_categorie(id_categorie_from_bundle, score_niveau_dans_categorie);
         }else{
             Toast.makeText(this, "Veillez entrer score", Toast.LENGTH_SHORT).show();
         }
     }
 
-
     public void nextClick(View view) {
-        if (cursseur_id_array_image == Images_array.size() - 1)
-            cursseur_id_array_image = 0;
+        if (indice == Images_array.size() - 1)
+            indice = 0;
         else
+            indice++;
             cursseur_id_array_image++;
         afficher_imageObject(cursseur_id_array_image);
 
     }
 
-
     public void backClick(View view) {
-        if (cursseur_id_array_image == 0)
-            cursseur_id_array_image = Images_array.size()-1;
+        if (indice == 0)
+            indice = Images_array.size()-1;
         else
+            indice --;
             cursseur_id_array_image--;
         afficher_imageObject(cursseur_id_array_image);
     }
