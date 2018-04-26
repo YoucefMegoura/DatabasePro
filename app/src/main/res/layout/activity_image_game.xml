@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context="dz.youcefmegoura.test.databasepro.Views.ImageGame">
 
+    <Button
+        android:id="@+id/speak_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Speak it"
+        android:onClick="speakClick"
+        android:layout_centerHorizontal="true"
+        />
+
     <TextView
         android:id="@+id/score_text_view"
         android:text="Score"

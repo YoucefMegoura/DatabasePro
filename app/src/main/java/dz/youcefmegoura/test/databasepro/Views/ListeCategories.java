@@ -16,9 +16,13 @@ import dz.youcefmegoura.test.databasepro.Database.DatabaseManager;
 import dz.youcefmegoura.test.databasepro.Objects.Categorie;
 import dz.youcefmegoura.test.databasepro.R;
 
+/**
+ * Created by Youcef Mégoura & Moussaoui Mekka on 21/04/2018.
+ */
+
 public class ListeCategories extends AppCompatActivity {
 
-    private  ArrayList<Categorie> Categories_array = new ArrayList<>();
+    private ArrayList<Categorie> Categories_array = new ArrayList<>();
     private DatabaseManager databaseManager;
 
     @Override

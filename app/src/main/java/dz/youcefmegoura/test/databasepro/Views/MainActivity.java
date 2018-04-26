@@ -8,9 +8,13 @@ import android.view.View;
 import dz.youcefmegoura.test.databasepro.Database.DatabaseManager;
 import dz.youcefmegoura.test.databasepro.R;
 
+/**
+ * Created by Youcef Mégoura & Moussaoui Mekka on 21/04/2018.
+ */
+
 public class MainActivity extends AppCompatActivity {
 
-    DatabaseManager databaseManager;
+    private DatabaseManager databaseManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

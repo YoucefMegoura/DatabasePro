@@ -14,7 +14,7 @@ import dz.youcefmegoura.test.databasepro.Objects.Niveau;
 
 
 /**
- * Created by Youcef Mégoura on 21/04/2018.
+ * Created by Youcef Mégoura & Moussaoui Mekka on 21/04/2018.
  */
 
 public class DatabaseManager extends SQLiteOpenHelper {
@@ -127,8 +127,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return arrayList_Niveaux;
     }
 
-    //Recupperer le score de toutes les images qui se trouvent dans le niveau
-    public int score_images_dans_niveau(int id_categorie, int id_niveau){
+    //Recupperer la somme des scores de toutes les images qui se trouvent dans le niveau
+    public int somme_score_images_dans_niveau(int id_categorie, int id_niveau){
         int score_image = 0;
         Cursor cursor = this.getReadableDatabase().query( "image",
                 new String[] { "score_image" },
@@ -143,8 +143,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return score_image;
     }
 
-    //Recupperer le score de toutes les niveaux qui se trouvent dans la categorie
-    public int score_niveaux_dans_categorie(int id_categorie){
+    //Recupperer la somme des scores de toutes les niveaux qui se trouvent dans la categorie
+    public int somme_score_niveaux_dans_categorie(int id_categorie){
         int score_niveau = 0;
 
         Cursor cursor = this.getReadableDatabase().query( "niveau",
