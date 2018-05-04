@@ -1,31 +1,43 @@
 package dz.youcefmegoura.test.databasepro.Views;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Locale;
 
 import dz.youcefmegoura.test.databasepro.Database.DatabaseManager;
 import dz.youcefmegoura.test.databasepro.Objects.Image;
 import dz.youcefmegoura.test.databasepro.R;
+import edu.cmu.pocketsphinx.Assets;
+import edu.cmu.pocketsphinx.Hypothesis;
+import edu.cmu.pocketsphinx.RecognitionListener;
+import edu.cmu.pocketsphinx.SpeechRecognizer;
+import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 
 /**
- * Created by Youcef Mégoura & Moussaoui Mekka on 21/04/2018.
+ * Created by Youcef Mégoura and Moussaoui Mekka on 21/04/2018.
  */
 
-public class ImageGame extends AppCompatActivity {
+public class ImageGame extends AppCompatActivity implements RecognitionListener {
     /*******************XML References******************/
     private ImageView image_view;
     private TextView score_text_view, nom_image_textView;
-    private EditText edit_text;
     /***************************************************/
 
     /*****************To Get from Bundle****************/
@@ -50,7 +62,6 @@ public class ImageGame extends AppCompatActivity {
         score_text_view = (TextView) findViewById(R.id.score_text_view);
         image_view = (ImageView) findViewById(R.id.image_view);
         nom_image_textView = (TextView) findViewById(R.id.nom_image_textView);
-        edit_text = (EditText) findViewById(R.id.edit_text);
         /**********************************************/
 
 
@@ -87,6 +98,15 @@ public class ImageGame extends AppCompatActivity {
         });
         /*******************************************************/
 
+
+        /*********************Pocketsphinx**********************/
+        int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, PERMISSIONS_REQUEST_RECORD_AUDIO);
+            return;
+        }
+        new SetupTask(this).execute();
+        /*******************************************************/
     }
 
     //Simple methode pour afficher tout les attributs d'une image dans XML ...
@@ -99,24 +119,9 @@ public class ImageGame extends AppCompatActivity {
 
     //onClick Button
     public void saveClick(View view) {
-        if (edit_text.getText().toString().length() != 0) {
-            int new_score = Integer.valueOf(edit_text.getText().toString());
-            databaseManager.changer_score_image(cursseur_id_array_image, new_score);
-            score_text_view.setText("Score : " + edit_text.getText().toString());
+        recognizer.stop();
+        recognizer.startListening(WORD_SEARCH, 5000);
 
-            /************** Pour changer le score du niveau et de la categorie dans la base de donnée ************/
-            //Niveau
-            int somme_score_images = databaseManager.somme_score_images_dans_niveau(id_categorie_from_bundle, id_niveau_from_bundle);
-            databaseManager.changer_score_niveau(id_niveau_from_bundle, somme_score_images);
-
-            //Categorie
-            int somme_score_niveau = databaseManager.somme_score_niveaux_dans_categorie(id_categorie_from_bundle);
-            databaseManager.changer_score_categorie(id_categorie_from_bundle, somme_score_niveau);
-            /*****************************************************************************************************/
-
-        } else {
-            Toast.makeText(this, "Veillez entrer score", Toast.LENGTH_SHORT).show();
-        }
     }
 
     //onClick Button
@@ -150,5 +155,149 @@ public class ImageGame extends AppCompatActivity {
             textToSpeech.speak(mot_a_prononce, TextToSpeech.QUEUE_FLUSH, null);
     }
 
+    /*
+    *
+    *
+    *
+    *  POCKET SPHINX
+    *
+    *
+    * */
+    private String grammar_sphinx = "en-en-first.gram";
+    private String dictionnaire_sphinx = "cmudict-en-us.dict";
+    private String ptm_sphinx = "en-us-ptm";
 
+    private static final String WORD_SEARCH = "world";
+    private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
+    private SpeechRecognizer recognizer;
+
+
+    @Override
+    public void onBeginningOfSpeech() {    }
+
+    @Override
+    public void onEndOfSpeech() {
+        recognizer.stop();
+    }
+
+    @Override
+    public void onPartialResult(Hypothesis hypothesis) {    }
+
+    @Override
+    public void onResult(Hypothesis hypothesis) {
+
+        int score = hypothesis.getBestScore();
+        float final_score = 0;
+        String mot_a_prononce = Images_array.get(indice).getNom_image();
+        if (hypothesis != null) {
+            if(if_word_correct(mot_a_prononce, hypothesis)) {
+                String text = hypothesis.getHypstr();
+                Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+                final_score = getScoreStars(score);
+
+            }else {
+                Toast.makeText(this, "mot incorrect !!", Toast.LENGTH_SHORT).show();
+                final_score = 0;
+            }
+            databaseManager.changer_score_image(cursseur_id_array_image, (int)(final_score * 2));
+            score_text_view.setText("Score : " + String.valueOf((int)(final_score * 2)));
+
+            /************** Pour changer le score du niveau et de la categorie dans la base de donnée ************/
+            //Niveau
+            int somme_score_images = databaseManager.somme_score_images_dans_niveau(id_categorie_from_bundle, id_niveau_from_bundle);
+            databaseManager.changer_score_niveau(id_niveau_from_bundle, somme_score_images);
+
+            //Categorie
+            int somme_score_niveau = databaseManager.somme_score_niveaux_dans_categorie(id_categorie_from_bundle);
+            databaseManager.changer_score_categorie(id_categorie_from_bundle, somme_score_niveau);
+            /*****************************************************************************************************/
+
+        }
+    }
+
+    @Override
+    public void onError(Exception e) {  }
+
+    @Override
+    public void onTimeout() {    }
+
+    private class SetupTask extends AsyncTask<Void, Void, Exception> {
+        WeakReference<ImageGame> activityReference;
+        SetupTask(ImageGame activity) {
+            this.activityReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        protected Exception doInBackground(Void... params) {
+            try {
+                Assets assets = new Assets(activityReference.get());
+                File assetDir = assets.syncAssets();
+                activityReference.get().setupRecognizer(assetDir);
+            } catch (IOException e) {
+                return e;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Exception result) {    }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull  int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSIONS_REQUEST_RECORD_AUDIO) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                new SetupTask(this).execute();
+            } else {
+                finish();
+            }
+        }
+    }
+
+    private void setupRecognizer(File assetsDir) throws IOException {
+
+        recognizer = SpeechRecognizerSetup.defaultSetup()
+                .setAcousticModel(new File(assetsDir, ptm_sphinx))
+                .setDictionary(new File(assetsDir, dictionnaire_sphinx))
+
+                .setRawLogDir(assetsDir) // To disable logging of raw audio comment out this call (takes a lot of space on the device)
+
+                .getRecognizer();
+        recognizer.addListener(this);
+
+        // Create keyword-activation search.
+        recognizer.addKeyphraseSearch(WORD_SEARCH, WORD_SEARCH);
+
+        // Create grammar-based search for digit recognition
+        File digitsGrammar = new File(assetsDir, grammar_sphinx);
+        recognizer.addGrammarSearch(WORD_SEARCH, digitsGrammar);
+    }
+
+    ////////////////////////////////////////////////////
+    public float getScoreStars(int getBestScore){
+        if (getBestScore <= 0 && getBestScore > -1000)
+            return 3.0f;
+        else if (getBestScore <= -1000 && getBestScore > -2000)
+            return 2.5f;
+        else if (getBestScore <= -2000 && getBestScore > -3000)
+            return 2;
+        else if (getBestScore <= -3000 && getBestScore > -4000)
+            return 1.5f;
+        else if (getBestScore <= -4000 && getBestScore > -5000)
+            return 1;
+        else if (getBestScore <= -5000 && getBestScore > -6000)
+            return 0.5f;
+        else
+            return 0;
+    }
+    ///////////////////////////////////////////////////
+
+    public Boolean if_word_correct(String mot_a_prononce, Hypothesis hypothesis){
+        if (hypothesis.getHypstr().equals(mot_a_prononce))
+            return true;
+        else
+            return false;
+    }
+    /////////////////////////////////////////////////////
 }

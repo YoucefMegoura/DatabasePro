@@ -17,7 +17,7 @@ import dz.youcefmegoura.test.databasepro.Objects.Niveau;
 import dz.youcefmegoura.test.databasepro.R;
 
 /**
- * Created by Youcef Mégoura & Moussaoui Mekka on 21/04/2018.
+ * Created by Youcef Mégoura and Moussaoui Mekka on 21/04/2018.
  */
 
 public class ListeNiveaux extends AppCompatActivity {

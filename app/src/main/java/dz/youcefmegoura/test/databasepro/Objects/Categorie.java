@@ -1,7 +1,7 @@
 package dz.youcefmegoura.test.databasepro.Objects;
 
 /**
- * Created by Youcef Mégoura & Moussaoui Mekka on 21/04/2018.
+ * Created by Youcef Mégoura and Moussaoui Mekka on 21/04/2018.
  */
 
 public class Categorie{

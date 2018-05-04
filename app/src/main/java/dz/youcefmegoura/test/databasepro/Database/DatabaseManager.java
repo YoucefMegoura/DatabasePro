@@ -14,7 +14,7 @@ import dz.youcefmegoura.test.databasepro.Objects.Niveau;
 
 
 /**
- * Created by Youcef Mégoura & Moussaoui Mekka on 21/04/2018.
+ * Created by Youcef Mégoura and Moussaoui Mekka on 21/04/2018.
  */
 
 public class DatabaseManager extends SQLiteOpenHelper {
@@ -31,21 +31,21 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         //Creation de la table categorie
         String strSql_categorie = "CREATE TABLE categorie ("
-                + "     id_categorie INTEGER NOT NULL UNIQUE,"
-                + "     nom_categorie TEXT NOT NULL,"
-                + "     score_categorie INTEGER NOT NULL DEFAULT 0,"
-                + "     PRIMARY KEY(id_categorie)"
+                + "      id_categorie INTEGER NOT NULL UNIQUE,"
+                + "      nom_categorie TEXT NOT NULL,"
+                + "      score_categorie INTEGER NOT NULL DEFAULT 0,"
+                + "      PRIMARY KEY(id_categorie)"
                 + ") WITHOUT ROWID;";
         db.execSQL( strSql_categorie );
 
         //Creation de la table niveau
         String strSql_niveau = "CREATE TABLE niveau ("
-                + "     id_niveau INTEGER NOT NULL UNIQUE,"
-                + "     nom_niveau TEXT NOT NULL,"
-                + "     score_niveau INTEGER NOT NULL DEFAULT 0,"
-                + "     id_categorie INTEGER NOT NULL,"
-                + "     PRIMARY KEY(id_niveau),"
-                + "     FOREIGN KEY(id_categorie) REFERENCES categorie(id_categorie)"
+                + "      id_niveau INTEGER NOT NULL UNIQUE,"
+                + "      nom_niveau TEXT NOT NULL,"
+                + "      score_niveau INTEGER NOT NULL DEFAULT 0,"
+                + "      id_categorie INTEGER NOT NULL,"
+                + "      PRIMARY KEY(id_niveau),"
+                + "      FOREIGN KEY(id_categorie) REFERENCES categorie(id_categorie)"
                 + ") WITHOUT ROWID;";
         db.execSQL( strSql_niveau );
 
@@ -64,6 +64,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.execSQL( strSql_images );
 
         Log.i( "DATABASE", "onCreate invoked" );
+
+        //Peupler les tables
+        PopulateDatabase.populate_categorie(db);
+        PopulateDatabase.populate_niveau(db);
+        PopulateDatabase.populate_image(db);
     }
 
     @Override
@@ -144,7 +149,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     //Recupperer la somme des scores de toutes les niveaux qui se trouvent dans la categorie
-    public int somme_score_niveaux_dans_categorie(int id_categorie){
+    public int somme_score_niveaux_dans_categorie(int id_categorie) {
         int score_niveau = 0;
 
         Cursor cursor = this.getReadableDatabase().query( "niveau",
@@ -191,4 +196,33 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return somme;
     }
     */
+
+
+
+    /*
+    INSERT INTO THE DATABASE METHODES
+
+    public void insert_image_in_db(int id_image, String nom_image, int score_image, int id_niveau, int id_categorie){
+        String strSql = "INSERT INTO image (id_image, nom_image, score_image, url_image, id_niveau, id_categorie) " +
+                "VALUES (" + id_image + ", " + nom_image + ", " + score_image + ", " + id_niveau + ", " + id_categorie + ")";
+        this.getWritableDatabase().execSQL(strSql);
+        Log.i("DATABASE", "INSERT query of image invoked");
+    }
+
+    public void insert_niveau_in_db(int id_niveau, String nom_niveau, int score_niveau, int id_categorie){
+        String strSql = "INSERT INTO niveau (id_niveau, nom_niveau, score_niveau, url_niveau, id_categorie) " +
+                "VALUES (" + id_niveau + ", " + nom_niveau + ", " + score_niveau + ", " + id_categorie + ")";
+        this.getWritableDatabase().execSQL(strSql);
+        Log.i("DATABASE", "INSERT query of niveau invoked");
+    }
+
+    public void insert_categorie_in_db(int id_categorie, String nom_categorie, int score_categorie){
+        String strSql = "INSERT INTO categorie (id_categorie, nom_categorie, score_categorie " +
+                "VALUES (" + id_categorie + ", " + nom_categorie + ", " + score_categorie + ")";
+        this.getWritableDatabase().execSQL(strSql);
+        Log.i("DATABASE", "INSERT query of categorie invoked");
+    }
+*/
+
+
 }
