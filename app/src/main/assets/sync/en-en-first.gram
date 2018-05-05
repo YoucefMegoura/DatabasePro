@@ -1,0 +1,16 @@
+#JSGF V1.0;
+
+grammar english;
+
+<word> = avocado |
+              bee |
+         mushroom |
+           flower |
+             peas |
+           beetle |
+           island |
+        pineapple |
+             moon |
+            whale ;
+
+public <english> = <word>;
