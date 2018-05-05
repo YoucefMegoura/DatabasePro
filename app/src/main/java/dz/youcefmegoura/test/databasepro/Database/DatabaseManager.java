@@ -1,6 +1,7 @@
 package dz.youcefmegoura.test.databasepro.Database;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -18,13 +19,13 @@ import dz.youcefmegoura.test.databasepro.Objects.Niveau;
  */
 
 public class DatabaseManager extends SQLiteOpenHelper {
+
     private final static String DB_NAME = "sqlite.db";
     private final static int DB_VERSION = 1;
 
     public DatabaseManager(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -69,6 +70,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
         PopulateDatabase.populate_categorie(db);
         PopulateDatabase.populate_niveau(db);
         PopulateDatabase.populate_image(db);
+
+        //jetons
+
     }
 
     @Override
@@ -163,6 +167,23 @@ public class DatabaseManager extends SQLiteOpenHelper {
         cursor.close();
 
         return score_niveau;
+    }
+
+    //Recupperer la somme des scores de toutes les categories
+    public int somme_score_categorie() {
+        int score_categorie = 0;
+
+        Cursor cursor = this.getReadableDatabase().query( "categorie",
+                new String[] { "score_categorie" },
+                null, null, null, null, null, null );
+        cursor.moveToFirst();
+        while( ! cursor.isAfterLast() ) {
+            score_categorie = score_categorie + cursor.getInt( 0 );
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return score_categorie;
     }
 
     //Changer le score de l'image where le id_image

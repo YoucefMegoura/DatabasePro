@@ -6,14 +6,36 @@
     android:layout_height="match_parent"
     tools:context="dz.youcefmegoura.test.databasepro.Views.ImageGame">
 
+    <TextView
+        android:id="@+id/score_tout_categorie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="22dp"
+        android:text="score_categorie" />
+
+    <TextView
+        android:id="@+id/jetons_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/score_tout_categorie"
+        android:layout_alignBottom="@+id/score_tout_categorie"
+        android:layout_marginEnd="30dp"
+        android:layout_toStartOf="@+id/image_view"
+        android:text="jetons" />
+
     <Button
         android:id="@+id/speak_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Speak it"
+        android:layout_above="@+id/score_text_view"
+        android:layout_marginBottom="30dp"
+        android:layout_toEndOf="@+id/back_btn"
         android:onClick="speakClick"
-        android:layout_centerHorizontal="true"
-        />
+        android:text="Speak it"
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/score_text_view"

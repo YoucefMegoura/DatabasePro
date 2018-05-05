@@ -6,22 +6,45 @@
     android:layout_height="match_parent"
     tools:context="dz.youcefmegoura.test.databasepro.Views.MainActivity">
 
-    <TextView
-        android:id="@+id/text_view"
+    <Button
+        android:id="@+id/commencer_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="178dp"
+        android:onClick="commencer_click"
+        android:text="commencer" />
 
     <Button
-        android:id="@+id/btn"
-        android:text="Btn"
+        android:id="@+id/jai_un_compte_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/commencer_btn"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/text_view"
-        android:onClick="ClickBtn"
-        />
+        android:layout_marginTop="27dp"
+        android:onClick="sinscrire_click"
+        android:text="s'inscrire" />
+
+    <Button
+        android:id="@+id/sinscrire_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/jai_un_compte_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:onClick="jai_un_compte_click"
+        android:text="j'ai un compte" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="97dp"
+        android:text="Sphinx for kid"
+        android:textSize="36dp" />
 
 
 </RelativeLayout>

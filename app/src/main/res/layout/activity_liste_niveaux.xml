@@ -6,17 +6,9 @@
     android:layout_height="match_parent"
     tools:context="dz.youcefmegoura.test.databasepro.Views.ListeNiveaux">
 
-    <TextView
-        android:id="@+id/textView_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Score
-"
-        android:textAlignment="center" />
-
     <ListView
         android:id="@+id/list_view_niveau"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/textView_main"/>
+        />
 </RelativeLayout>

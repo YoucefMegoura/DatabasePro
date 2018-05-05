@@ -23,7 +23,7 @@ public class PopulateDatabase {
         db.execSQL("INSERT INTO niveau (id_niveau, nom_niveau, score_niveau, id_categorie) VALUES (5, 'niv 2', 0, 2); ");
         db.execSQL("INSERT INTO niveau (id_niveau, nom_niveau, score_niveau, id_categorie) VALUES (6, 'niv 3', 0, 2); ");
         db.execSQL("INSERT INTO niveau (id_niveau, nom_niveau, score_niveau, id_categorie) VALUES (7, 'niv 1', 0, 3); ");
-        db.execSQL( "INSERT INTO niveau (id_niveau, nom_niveau, score_niveau, id_categorie) VALUES (8, 'niv 2', 0, 3); ");
+        db.execSQL("INSERT INTO niveau (id_niveau, nom_niveau, score_niveau, id_categorie) VALUES (8, 'niv 2', 0, 3); ");
         db.execSQL("INSERT INTO niveau (id_niveau, nom_niveau, score_niveau, id_categorie) VALUES (9, 'niv 3', 0, 3);");
 
     }
@@ -38,6 +38,7 @@ public class PopulateDatabase {
         db.execSQL("INSERT INTO image (id_image, nom_image, score_image, url_image, id_niveau, id_categorie) VALUES (7, 'island', 0, 'island', 3, 1); ");
         db.execSQL("INSERT INTO image (id_image, nom_image, score_image, url_image, id_niveau, id_categorie) VALUES (8, 'pineapple', 0, 'pineapple', 3, 1); ");
         db.execSQL("INSERT INTO image (id_image, nom_image, score_image, url_image, id_niveau, id_categorie) VALUES (9, 'moon', 0, 'moon', 3, 1); ");
+        db.execSQL("INSERT INTO image (id_image, nom_image, score_image, url_image, id_niveau, id_categorie) VALUES (10, 'whale', 0, 'whale', 1, 1); ");
 
     }
 

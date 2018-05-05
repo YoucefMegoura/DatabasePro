@@ -1,6 +1,8 @@
 package dz.youcefmegoura.test.databasepro.Views;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import dz.youcefmegoura.test.databasepro.Database.DatabaseManager;
+import dz.youcefmegoura.test.databasepro.Database.SharedPref;
 import dz.youcefmegoura.test.databasepro.Objects.Image;
 import dz.youcefmegoura.test.databasepro.R;
 import edu.cmu.pocketsphinx.Assets;
@@ -35,15 +39,20 @@ import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
  */
 
 public class ImageGame extends AppCompatActivity implements RecognitionListener {
-    /*******************XML References******************/
-    private ImageView image_view;
-    private TextView score_text_view, nom_image_textView;
-    /***************************************************/
+    /********  Shared Preferences  ************/
 
-    /*****************To Get from Bundle****************/
+    /********************************************/
+
+    /******************* XML References ******************/
+    private ImageView image_view;
+    private TextView score_text_view, nom_image_textView, score_tout_categorie, jetons_user;
+    private Button save_btn;
+    /*****************************************************/
+
+    /***************** To Get from Bundle ****************/
     private int id_categorie_from_bundle;
     private int id_niveau_from_bundle;
-    /***************************************************/
+    /*****************************************************/
 
     private TextToSpeech textToSpeech;
 
@@ -53,26 +62,30 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
     private int cursseur_id_array_image;//Image ID in database
     private int indice;//Array
 
-    @Override
+
+      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_game);
 
-        /***************XML References******************/
+        /*************** XML References ******************/
         score_text_view = (TextView) findViewById(R.id.score_text_view);
         image_view = (ImageView) findViewById(R.id.image_view);
         nom_image_textView = (TextView) findViewById(R.id.nom_image_textView);
-        /**********************************************/
-
-
-        /*****************Get from Bundle****************/
-        Bundle bundle = getIntent().getExtras();
-        id_categorie_from_bundle = bundle.getInt("id_categorie");
-        id_niveau_from_bundle = bundle.getInt("id_niveau");
+        score_tout_categorie = (TextView) findViewById(R.id.score_tout_categorie);
+        jetons_user = (TextView) findViewById(R.id.jetons_user);
+        save_btn = (Button) findViewById(R.id.save_btn);
         /************************************************/
 
 
-        /****************Initialisation******************/
+        /***************** Get from Bundle ****************/
+        Bundle bundle = getIntent().getExtras();
+        id_categorie_from_bundle = bundle.getInt("id_categorie");
+        id_niveau_from_bundle = bundle.getInt("id_niveau");
+        /**************************************************/
+
+
+        /**************** Initialisation ******************/
         indice = 0;
         databaseManager = new DatabaseManager(this);
         Images_array = new ArrayList<>(databaseManager.readFrom_ImageTable_where_categorie_and_niveau(id_categorie_from_bundle, id_niveau_from_bundle));
@@ -99,14 +112,19 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         /*******************************************************/
 
 
-        /*********************Pocketsphinx**********************/
+        /********************* Pocketsphinx **********************/
         int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, PERMISSIONS_REQUEST_RECORD_AUDIO);
             return;
         }
+
         new SetupTask(this).execute();
-        /*******************************************************/
+        /*********************************************************/
+
+        score_tout_categorie.setText("Total points : " + String.valueOf(databaseManager.somme_score_categorie()));
+        jetons_user.setText("Jetons : " + String.valueOf(SharedPref.JETONS_USER));
+        save_btn.setEnabled(false);
     }
 
     //Simple methode pour afficher tout les attributs d'une image dans XML ...
@@ -121,7 +139,6 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
     public void saveClick(View view) {
         recognizer.stop();
         recognizer.startListening(WORD_SEARCH, 5000);
-
     }
 
     //onClick Button
@@ -130,7 +147,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
             indice = 0;
         else
             indice++;
-        cursseur_id_array_image++;
+        cursseur_id_array_image = Images_array.get(indice).getId_image();
         afficher_imageObject(cursseur_id_array_image);
 
     }
@@ -141,18 +158,27 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
             indice = Images_array.size() - 1;
         else
             indice--;
-        cursseur_id_array_image--;
+        cursseur_id_array_image = Images_array.get(indice).getId_image();
         afficher_imageObject(cursseur_id_array_image);
     }
 
     //onClick Button
     public void speakClick(View view) {
-        String mot_a_prononce = Images_array.get(indice).getNom_image();
-        if (mot_a_prononce == null || mot_a_prononce.length() == 0) {
-            Toast.makeText(this, mot_a_prononce, Toast.LENGTH_SHORT).show();
+        if (SharedPref.JETONS_USER > 0 ){
+            String mot_a_prononce = Images_array.get(indice).getNom_image();
+            if (mot_a_prononce == null || mot_a_prononce.length() == 0) {
+                Toast.makeText(this, "Some Error occured !", Toast.LENGTH_SHORT).show();
+            } else
+                textToSpeech.speak(mot_a_prononce, TextToSpeech.QUEUE_FLUSH, null);
 
-        } else
-            textToSpeech.speak(mot_a_prononce, TextToSpeech.QUEUE_FLUSH, null);
+            SharedPref.JETONS_USER -- ;
+            jetons_user.setText("Jetons : " + String.valueOf(SharedPref.JETONS_USER));
+        }else{
+            Button button = (Button) findViewById(R.id.speak_btn);
+            button.setEnabled(false);
+            button.setClickable(false);
+        }
+
     }
 
     /*
@@ -210,7 +236,11 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
             //Categorie
             int somme_score_niveau = databaseManager.somme_score_niveaux_dans_categorie(id_categorie_from_bundle);
             databaseManager.changer_score_categorie(id_categorie_from_bundle, somme_score_niveau);
+
+            //Somme des categories dans l'activité image_activity
+            score_tout_categorie.setText("Total points : " + String.valueOf(databaseManager.somme_score_categorie()));
             /*****************************************************************************************************/
+
 
         }
     }
@@ -240,7 +270,13 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         }
 
         @Override
-        protected void onPostExecute(Exception result) {    }
+        protected void onPostExecute(Exception result) {
+            if (result == null) {
+                save_btn.setEnabled(true);
+
+            }
+
+        }
     }
 
     @Override
