@@ -3,6 +3,7 @@ package dz.youcefmegoura.test.databasepro.Views;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
@@ -15,13 +16,13 @@ import dz.youcefmegoura.test.databasepro.R;
  */
 
 public class MainActivity extends AppCompatActivity {
-
     private DatabaseManager databaseManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         databaseManager = new DatabaseManager(this);
     }
