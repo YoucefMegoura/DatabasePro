@@ -34,9 +34,9 @@
         android:id="@+id/email_ET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_below="@+id/pseudo_ET"
         android:hint="Email"
+        android:inputType="textEmailAddress"
         />
 
     <EditText
@@ -45,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/email_ET"
         android:hint="Mot de passe"
+        android:inputType="textPassword"
         />
 
     <EditText
@@ -53,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/mot_de_passe_ET"
         android:hint="Confirmer mot de passe"
+        android:inputType="textPassword"
         />
 
     <EditText
@@ -62,6 +64,7 @@
         android:layout_below="@+id/confirmer_mot_de_passe_ET"
         android:layout_centerHorizontal="true"
         android:hint="Age"
+        android:inputType="number"
         />
 
 

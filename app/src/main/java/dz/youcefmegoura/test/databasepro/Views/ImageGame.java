@@ -1,8 +1,6 @@
 package dz.youcefmegoura.test.databasepro.Views;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -246,10 +244,15 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
     }
 
     @Override
-    public void onError(Exception e) {  }
+    public void onError(Exception e) {
+        Toast.makeText(this, "Some error occured !", Toast.LENGTH_SHORT).show();
+        Log.i("Pocketsphinx", "OnError Invoked !");
+    }
 
     @Override
-    public void onTimeout() {    }
+    public void onTimeout() {
+        recognizer.stop();
+    }
 
     private class SetupTask extends AsyncTask<Void, Void, Exception> {
         WeakReference<ImageGame> activityReference;

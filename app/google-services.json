@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1006794018814",
+    "firebase_url": "https://databasepro-youcefmegoura.firebaseio.com",
+    "project_id": "databasepro-youcefmegoura",
+    "storage_bucket": "databasepro-youcefmegoura.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006794018814:android:e98d194e0c68dd30",
+        "android_client_info": {
+          "package_name": "dz.youcefmegoura.test.databasepro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1006794018814-6fbl5ajutdn6fke1cj791msi9b8q9lrk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dz.youcefmegoura.test.databasepro",
+            "certificate_hash": "6b09ac08c6db4c9e491ff2bd249f930c1795c113"
+          }
+        },
+        {
+          "client_id": "1006794018814-ogo2meke4ooq07b6f7vsjrcrqrk9q8au.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTtyyMcJsdCEhBIb9h-5QQo5mnsogpjDg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1006794018814-ogo2meke4ooq07b6f7vsjrcrqrk9q8au.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
