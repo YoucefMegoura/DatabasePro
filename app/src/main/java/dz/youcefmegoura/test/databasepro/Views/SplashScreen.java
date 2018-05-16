@@ -8,6 +8,10 @@ import android.os.Bundle;
 
 import dz.youcefmegoura.test.databasepro.R;
 
+/**
+ * Created by Youcef Mégoura and Moussaoui Mekka on 05/05/2018.
+ */
+
 public class SplashScreen extends Activity {
     private static final int SPLASH_TIME_OUT = 4000;
 

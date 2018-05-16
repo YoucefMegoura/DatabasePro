@@ -2,6 +2,7 @@ package dz.youcefmegoura.test.databasepro.Views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
@@ -21,10 +22,11 @@ import com.google.firebase.auth.FirebaseUser;
 import dz.youcefmegoura.test.databasepro.R;
 
 public class Connexion extends AppCompatActivity {
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     /************** XML References ***************/
     private EditText email_ET, mot_de_passe_ET;
-
     /*********************************************/
 
 
@@ -47,8 +49,10 @@ public class Connexion extends AppCompatActivity {
         auth_firebase = FirebaseAuth.getInstance();
         /**************************************************/
 
+        sharedPreferences = getSharedPreferences("int", MODE_PRIVATE);
 
-
+        int a = sharedPreferences.getInt("integer", 0);
+        Toast.makeText(this, String.valueOf(a), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -68,8 +72,6 @@ public class Connexion extends AppCompatActivity {
             email_ET.requestFocus() ;
             return;
         }
-
-
 
         if (password.isEmpty()){
             mot_de_passe_ET.setError("Password is required");
@@ -97,20 +99,23 @@ public class Connexion extends AppCompatActivity {
 
     }
 
+    //onClick Button
     public void se_connecter_google_click(View view) {
     }
 
+    //onClick Button
     public void se_connecter_facebook_click(View view) {
     }
 
+    //onClick Button
     public void back_click(View view) {
         finish();
     }
 
-
-    /**************** Firebase Authentification *******************/
-
-    /*************************************************************/
+    //onClick Button
+    public void mot_de_passe_oublie_click(View view) {
+        startActivity(new Intent(this, MotDePasseOublie.class));
+    }
 
     //Verifier si l'appareil est connecter a internet
     public boolean isNetworkAvailable() {
@@ -118,9 +123,5 @@ public class Connexion extends AppCompatActivity {
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return (activeNetworkInfo != null && activeNetworkInfo.isConnected());
-    }
-
-    public void mot_de_passe_oublie_click(View view) {
-        startActivity(new Intent(this, MotDePasseOublie.class));
     }
 }

@@ -190,8 +190,8 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
     private String grammar_sphinx = "en-en-first.gram";
     private String dictionnaire_sphinx = "cmudict-en-us.dict";
     private String ptm_sphinx = "en-us-ptm";
-
     private static final String WORD_SEARCH = "world";
+
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
     private SpeechRecognizer recognizer;
 
@@ -238,8 +238,6 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
             //Somme des categories dans l'activité image_activity
             score_tout_categorie.setText("Total points : " + String.valueOf(databaseManager.somme_score_categorie()));
             /*****************************************************************************************************/
-
-
         }
     }
 
@@ -276,9 +274,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         protected void onPostExecute(Exception result) {
             if (result == null) {
                 save_btn.setEnabled(true);
-
             }
-
         }
     }
 

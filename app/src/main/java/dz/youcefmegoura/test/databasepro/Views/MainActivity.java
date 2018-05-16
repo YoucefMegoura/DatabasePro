@@ -18,13 +18,20 @@ import dz.youcefmegoura.test.databasepro.R;
 public class MainActivity extends AppCompatActivity {
     private DatabaseManager databaseManager;
 
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        int a = 5;
 
         databaseManager = new DatabaseManager(this);
+
+        sharedPreferences = getSharedPreferences("int", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        editor.putInt("integer", a);
+        editor.apply();
     }
 
     // onCLick Button

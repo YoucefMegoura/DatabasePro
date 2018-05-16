@@ -57,7 +57,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 + "      score_image INTEGER DEFAULT (0),"
                 + "      url_image    TEXT,"
                 + "      id_niveau INTEGER NOT NULL ,"
-                + "      id_categorie INTEGER NOT NULL,"
+                + "      id_categorie INTEGER NOT NULL," //+ id_user foreing key references (id_user)
                 + "      PRIMARY KEY (id_image),"
                 +"       FOREIGN KEY (id_niveau) REFERENCES niveau (id_niveau),"
                 + "      FOREIGN KEY (id_categorie) REFERENCES categorie (id_categorie)"
