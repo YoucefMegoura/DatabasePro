@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="dz.youcefmegoura.test.databasepro.Views.ChoisirLangue">
+
+
+    <Button
+        android:id="@+id/english_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="74dp"
+        android:onClick="englishClick"
+        android:text="ENG" />
+
+    <Button
+        android:id="@+id/french_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/english_btn"
+        android:layout_below="@+id/english_btn"
+        android:layout_marginTop="64dp"
+        android:onClick="frenchClick"
+        android:text="FR" />
+
+    <Button
+        android:id="@+id/german_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/french_btn"
+        android:layout_below="@+id/french_btn"
+        android:layout_marginTop="64dp"
+        android:onClick="germanClick"
+        android:text="FR" />
+
+
+</RelativeLayout>

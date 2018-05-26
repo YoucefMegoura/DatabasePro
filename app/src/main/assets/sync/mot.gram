@@ -1,0 +1,15 @@
+#JSGF V1.0;
+
+grammar mot;
+public <item> =  (
+                    avocat|
+                    abeille|
+                    champignon|
+                    fleur|
+                    pois|
+                    ile|
+                    ananas|
+                    lune|
+                    baleine|
+                    scarabee
+                   );
