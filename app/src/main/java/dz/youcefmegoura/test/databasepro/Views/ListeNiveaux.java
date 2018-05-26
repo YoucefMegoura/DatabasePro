@@ -26,17 +26,21 @@ public class ListeNiveaux extends AppCompatActivity {
     private DatabaseManager databaseManager;
     private int id_categorie_from_bundle;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_niveaux);
-        databaseManager = new DatabaseManager( this );
+
 
         /*****************Get from Bundle****************/
         Bundle bundle = getIntent().getExtras();
         id_categorie_from_bundle = bundle.getInt("id_categorie");
-        /************************************************/
 
+
+
+        /************************************************/
+        databaseManager = new DatabaseManager( this , ListeCategories.DB_NAME);
     }
 
     @Override

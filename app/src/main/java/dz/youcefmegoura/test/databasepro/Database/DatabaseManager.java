@@ -1,7 +1,6 @@
 package dz.youcefmegoura.test.databasepro.Database;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -20,11 +19,18 @@ import dz.youcefmegoura.test.databasepro.Objects.Niveau;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 
-    private final static String DB_NAME = "sqlite.db";
+
     private final static int DB_VERSION = 1;
 
-    public DatabaseManager(Context context) {
+    public String getDB_NAME() {
+        return DB_NAME;
+    }
+
+    private String DB_NAME;
+
+    public DatabaseManager(Context context, String DB_NAME) {
         super(context, DB_NAME, null, DB_VERSION);
+        this.DB_NAME = DB_NAME;
     }
 
     @Override
@@ -66,10 +72,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         Log.i( "DATABASE", "onCreate invoked" );
 
-        //Peupler les tables
-        PopulateDatabase.populate_categorie(db);
-        PopulateDatabase.populate_niveau(db);
-        PopulateDatabase.populate_image(db);
+
+        PopulateDatabase.populate_categorie(db, DB_NAME);
+        PopulateDatabase.populate_niveau(db, DB_NAME);
+        PopulateDatabase.populate_image(db, DB_NAME);
 
         //jetons
 

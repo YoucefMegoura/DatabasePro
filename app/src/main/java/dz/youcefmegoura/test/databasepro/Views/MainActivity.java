@@ -3,10 +3,8 @@ package dz.youcefmegoura.test.databasepro.Views;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
 import dz.youcefmegoura.test.databasepro.Database.DatabaseManager;
 import dz.youcefmegoura.test.databasepro.R;
@@ -26,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         int a = 5;
 
-        databaseManager = new DatabaseManager(this);
+        //databaseManager = new DatabaseManager(this, );
 
         sharedPreferences = getSharedPreferences("int", MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     // onCLick Button
     public void commencer_click(View view) {
-        startActivity(new Intent(this, ListeCategories.class));
+        startActivity(new Intent(this, ChoisirLangue.class));
     }
 
     public void sinscrire_click(View view) {

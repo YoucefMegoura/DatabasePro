@@ -1,5 +1,6 @@
 cmudict-en-us.dict
 cmudict-fr-fr.dict
+cmudict-gr-gr.dict
 en-en-first.gram
 en-us-ptm/README
 en-us-ptm/feat.params
@@ -9,7 +10,6 @@ en-us-ptm/noisedict
 en-us-ptm/sendump
 en-us-ptm/transition_matrices
 en-us-ptm/variances
-fr-fr-first.gram
 fr-fr-ptm/README
 fr-fr-ptm/feat.params
 fr-fr-ptm/mdef
@@ -19,3 +19,13 @@ fr-fr-ptm/noisedict
 fr-fr-ptm/sendump
 fr-fr-ptm/transition_matrices
 fr-fr-ptm/variances
+gr-gr-first.gram
+gr-gr-ptm/feat.params
+gr-gr-ptm/mdef
+gr-gr-ptm/means
+gr-gr-ptm/mixture_weights
+gr-gr-ptm/noisedict
+gr-gr-ptm/sendump
+gr-gr-ptm/transition_matrices
+gr-gr-ptm/variances
+mot.gram

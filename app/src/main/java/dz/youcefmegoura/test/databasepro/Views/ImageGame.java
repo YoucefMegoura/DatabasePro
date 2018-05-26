@@ -39,6 +39,7 @@ import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 public class ImageGame extends AppCompatActivity implements RecognitionListener {
     /********  Shared Preferences  ************/
 
+
     /********************************************/
 
     /******************* XML References ******************/
@@ -66,6 +67,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_game);
 
+        choix_language(ListeCategories.DB_NAME);
         /*************** XML References ******************/
         score_text_view = (TextView) findViewById(R.id.score_text_view);
         image_view = (ImageView) findViewById(R.id.image_view);
@@ -85,7 +87,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
 
         /**************** Initialisation ******************/
         indice = 0;
-        databaseManager = new DatabaseManager(this);
+        databaseManager = new DatabaseManager(this, ListeCategories.DB_NAME);
         Images_array = new ArrayList<>(databaseManager.readFrom_ImageTable_where_categorie_and_niveau(id_categorie_from_bundle, id_niveau_from_bundle));
         cursseur_id_array_image = Images_array.get(indice).getId_image();
 
@@ -98,7 +100,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
-                    int result = textToSpeech.setLanguage(Locale.ENGLISH);
+                    int result = textToSpeech.setLanguage(loc);
                     if (result == TextToSpeech.LANG_MISSING_DATA ||
                             result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Toast.makeText(ImageGame.this, "This Language is not supported", Toast.LENGTH_SHORT).show();
@@ -187,13 +189,46 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
     *
     *
     * */
-    private String grammar_sphinx = "en-en-first.gram";
-    private String dictionnaire_sphinx = "cmudict-en-us.dict";
-    private String ptm_sphinx = "en-us-ptm";
-    private static final String WORD_SEARCH = "world";
+
+    private String grammar_sphinx ;
+    private String dictionnaire_sphinx;
+    private String ptm_sphinx ;
+    private String WORD_SEARCH ;
+    private Locale loc;
+
+    public void choix_language(String DB_NAME){
+        switch (DB_NAME){
+            case "english.db" :
+                grammar_sphinx = "en-en-first.gram";
+                dictionnaire_sphinx = "cmudict-en-us.dict";
+                ptm_sphinx = "en-us-ptm";
+                WORD_SEARCH = "world";
+                loc = Locale.ENGLISH;
+                break;
+
+            case "french.db" :
+                grammar_sphinx = "mot.gram";
+                dictionnaire_sphinx = "cmudict-fr-fr.dict";
+                ptm_sphinx = "fr-fr-ptm";
+                WORD_SEARCH = "mot";
+                loc = Locale.FRANCE;
+                break;
+
+            case "german.db" :
+                grammar_sphinx = "gr-gr-first.gram";
+                dictionnaire_sphinx = "cmudict-gr-gr.dict";
+                ptm_sphinx = "gr-gr-ptm";
+                WORD_SEARCH = "mot-gr";
+                loc = Locale.GERMANY;
+                break;
+
+        }
+    }
 
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
     private SpeechRecognizer recognizer;
+
+
 
 
     @Override
@@ -209,8 +244,13 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
 
     @Override
     public void onResult(Hypothesis hypothesis) {
-
-        int score = hypothesis.getBestScore();
+        int score ;
+        try {
+            score = hypothesis.getBestScore();
+        }catch(NullPointerException e){
+            score = 0 ;
+            Log.i("score", "nullpointer");
+        }
         float final_score = 0;
         String mot_a_prononce = Images_array.get(indice).getNom_image();
         if (hypothesis != null) {

@@ -28,7 +28,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Views.MotDePasseOublie"></activity>
+        <activity android:name=".Views.MotDePasseOublie" />
+        <activity android:name=".Views.ChoisirLangue"></activity>
     </application>
 
 </manifest>

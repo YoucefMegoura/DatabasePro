@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import dz.youcefmegoura.test.databasepro.Database.DatabaseManager;
+import dz.youcefmegoura.test.databasepro.Database.PopulateDatabase;
 import dz.youcefmegoura.test.databasepro.Objects.Categorie;
 import dz.youcefmegoura.test.databasepro.R;
 
@@ -24,17 +25,24 @@ public class ListeCategories extends AppCompatActivity {
 
     private ArrayList<Categorie> Categories_array = new ArrayList<>();
     private DatabaseManager databaseManager;
+    protected static String DB_NAME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_categories);
-        databaseManager = new DatabaseManager( this );
+
+        Bundle bundle = getIntent().getExtras();
+        DB_NAME = bundle.getString("DB_NAME");
+
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        databaseManager = new DatabaseManager( this , DB_NAME);
         Categories_array = new ArrayList<Categorie>(databaseManager.readFrom_CategorieTable()) ;
         CustAdapt cus = new CustAdapt(Categories_array);
         ListView ls = (ListView) findViewById(R.id.liste_view_categorie);
