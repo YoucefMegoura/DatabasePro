@@ -28,6 +28,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation project(':pocketsphinx-android-5prealpha-release')
+    implementation 'com.github.markushi:circlebutton:1.1'
+   // implementation 'com.github.GrenderG:Toasty:1.2.8'
+    implementation 'com.iarcuschin:simpleratingbar:0.1.5'
 }
 
 ant.importBuild 'assets.xml'

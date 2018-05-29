@@ -13,7 +13,7 @@ import dz.youcefmegoura.test.databasepro.R;
  */
 
 public class SplashScreen extends Activity {
-    private static final int SPLASH_TIME_OUT = 4000;
+    private static final int SPLASH_TIME_OUT = 1000; //TODO : replace with 4 sec
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

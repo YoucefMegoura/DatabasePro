@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +27,7 @@ public class ListeNiveaux extends AppCompatActivity {
     private ArrayList<Niveau> ListeNiveaux_array = new ArrayList<>();
     private DatabaseManager databaseManager;
     private int id_categorie_from_bundle;
+    private GridView gridView;
 
 
     @Override
@@ -49,8 +52,8 @@ public class ListeNiveaux extends AppCompatActivity {
         ListeNiveaux_array = new ArrayList<Niveau>(databaseManager.readFrom_NiveauTable_where_categorie(id_categorie_from_bundle)) ;
 
         CustAdapt cus = new CustAdapt(ListeNiveaux_array);
-        ListView ls = (ListView) findViewById(R.id.list_view_niveau);
-        ls.setAdapter(cus);
+        gridView = findViewById(R.id.gridview);
+        gridView.setAdapter(cus);
         databaseManager.close();
     }
 
@@ -82,17 +85,12 @@ public class ListeNiveaux extends AppCompatActivity {
             View myView = myInflater.inflate(R.layout.template_niveau, null);
 
             TextView id_niveau = myView.findViewById(R.id.id_niveau);
-            TextView nom_niveau = myView.findViewById(R.id.nom_niveau);
-            TextView score_niveau = myView.findViewById(R.id.score_niveau);
+
 
             id_niveau.setText(String.valueOf(items.get(position).getId_niveau()));
-            nom_niveau.setText(items.get(position).getNom_niveau());
-            score_niveau.setText(String.valueOf(items.get(position).getScore_niveau()));
-
-            nom_niveau.setOnClickListener(new View.OnClickListener() {
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onClick(View v) {
-                    //Toast.makeText(Main.this, LevelScore_array.get(position).getName(), Toast.LENGTH_SHORT).show();
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Bundle bundle = new Bundle();
                     bundle.putInt("id_niveau", ListeNiveaux_array.get(position).getId_niveau());
                     bundle.putInt("id_categorie", id_categorie_from_bundle);

@@ -2,6 +2,7 @@ package dz.youcefmegoura.test.databasepro.Views;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -12,7 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,13 +42,14 @@ import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 public class ImageGame extends AppCompatActivity implements RecognitionListener {
     /********  Shared Preferences  ************/
 
-
     /********************************************/
 
     /******************* XML References ******************/
     private ImageView image_view;
     private TextView score_text_view, nom_image_textView, score_tout_categorie, jetons_user;
-    private Button save_btn;
+    private ImageButton speak_btn;
+    private ProgressBar progress;
+    private Button next_btn;
     /*****************************************************/
 
     /***************** To Get from Bundle ****************/
@@ -62,6 +66,10 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
     private int indice;//Array
 
 
+    /*****************Music player******************/
+    private MediaPlayer valid_wav, wrog_wav;
+    /************************************************/
+
       @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,12 +79,17 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         /*************** XML References ******************/
         score_text_view = (TextView) findViewById(R.id.score_text_view);
         image_view = (ImageView) findViewById(R.id.image_view);
-        nom_image_textView = (TextView) findViewById(R.id.nom_image_textView);
         score_tout_categorie = (TextView) findViewById(R.id.score_tout_categorie);
         jetons_user = (TextView) findViewById(R.id.jetons_user);
-        save_btn = (Button) findViewById(R.id.save_btn);
-        /************************************************/
+        speak_btn = (ImageButton) findViewById(R.id.speak_btn);
+        progress = (ProgressBar) findViewById(R.id.progress);
+        next_btn = (Button) findViewById(R.id.next_btn);
+        progress = (ProgressBar) findViewById(R.id.progress);
 
+        valid_wav = MediaPlayer.create(this, R.raw.wrong);
+        wrog_wav = MediaPlayer.create(this, R.raw.valid);
+
+        /************************************************/
 
         /***************** Get from Bundle ****************/
         Bundle bundle = getIntent().getExtras();
@@ -92,6 +105,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         cursseur_id_array_image = Images_array.get(indice).getId_image();
 
         afficher_imageObject(indice);//Afficher la premiere image dans onCreate
+        progress.setProgress(0);
         /*************************************************/
 
 
@@ -124,7 +138,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
 
         score_tout_categorie.setText("Total points : " + String.valueOf(databaseManager.somme_score_categorie()));
         jetons_user.setText("Jetons : " + String.valueOf(SharedPref.JETONS_USER));
-        save_btn.setEnabled(false);
+        speak_btn.setEnabled(false);
     }
 
     //Simple methode pour afficher tout les attributs d'une image dans XML ...
@@ -132,38 +146,43 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         score_text_view.setText("Score : " + String.valueOf(Images_array.get(indice).getScore_image()));
         int drawableResourceId = this.getResources().getIdentifier(Images_array.get(indice).getUrl_image(), "drawable", this.getPackageName());
         image_view.setImageResource(drawableResourceId);
-        nom_image_textView.setText("Nom image : " + Images_array.get(indice).getNom_image());
+        //nom_image_textView.setText("Nom image : " + Images_array.get(indice).getNom_image());
     }
 
     //onClick Button
-    public void saveClick(View view) {
+    public void startClick(View view) {
         recognizer.stop();
         recognizer.startListening(WORD_SEARCH, 5000);
     }
 
     //onClick Button
     public void nextClick(View view) {
-        if (indice == Images_array.size() - 1)
-            indice = 0;
-        else
+        if (indice == Images_array.size() - 1) {
+            next_btn.setVisibility(View.GONE);
+            Toast.makeText(this, "level over", Toast.LENGTH_SHORT).show();
+        }else
             indice++;
         cursseur_id_array_image = Images_array.get(indice).getId_image();
         afficher_imageObject(cursseur_id_array_image);
 
+        next_btn.setVisibility(View.GONE);
+
     }
 
     //onClick Button
-    public void backClick(View view) {
+    /*public void backClick(View view) {
         if (indice == 0)
             indice = Images_array.size() - 1;
         else
             indice--;
         cursseur_id_array_image = Images_array.get(indice).getId_image();
         afficher_imageObject(cursseur_id_array_image);
-    }
+    }*/
+    //load the next image
+
 
     //onClick Button
-    public void speakClick(View view) {
+    public void textTospeechClick(View view) {
         if (SharedPref.JETONS_USER > 0 ){
             String mot_a_prononce = Images_array.get(indice).getNom_image();
             if (mot_a_prononce == null || mot_a_prononce.length() == 0) {
@@ -174,7 +193,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
             SharedPref.JETONS_USER -- ;
             jetons_user.setText("Jetons : " + String.valueOf(SharedPref.JETONS_USER));
         }else{
-            Button button = (Button) findViewById(R.id.speak_btn);
+            ImageButton button = (ImageButton) findViewById(R.id.speak_btn);
             button.setEnabled(false);
             button.setClickable(false);
         }
@@ -258,7 +277,6 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
                 String text = hypothesis.getHypstr();
                 Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
                 final_score = getScoreStars(score);
-
             }else {
                 Toast.makeText(this, "mot incorrect !!", Toast.LENGTH_SHORT).show();
                 final_score = 0;
@@ -278,7 +296,18 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
             //Somme des categories dans l'activité image_activity
             score_tout_categorie.setText("Total points : " + String.valueOf(databaseManager.somme_score_categorie()));
             /*****************************************************************************************************/
+
+            next_btn.setVisibility(View.VISIBLE);
+            progress.setProgress((indice + 1) * 100 / Images_array.size());
+
+            //TODO : wrong ....
+            if(final_score != 0){
+                wrog_wav.start();
+            }else{
+                valid_wav.start();
+            }
         }
+
     }
 
     @Override
@@ -292,10 +321,16 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         recognizer.stop();
     }
 
+    public void closeBtn(View view) {
+        finish();
+    }
+
     private class SetupTask extends AsyncTask<Void, Void, Exception> {
         WeakReference<ImageGame> activityReference;
         SetupTask(ImageGame activity) {
             this.activityReference = new WeakReference<>(activity);
+            ////////////////////
+            next_btn.setVisibility(View.GONE);
         }
 
         @Override
@@ -313,7 +348,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         @Override
         protected void onPostExecute(Exception result) {
             if (result == null) {
-                save_btn.setEnabled(true);
+                speak_btn.setEnabled(true);
             }
         }
     }

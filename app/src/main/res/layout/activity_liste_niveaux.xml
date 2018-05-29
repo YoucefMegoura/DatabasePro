@@ -2,13 +2,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="dz.youcefmegoura.test.databasepro.Views.ListeNiveaux">
+    tools:context="dz.youcefmegoura.test.databasepro.Views.ListeNiveaux"
+    android:background="#e5f2f2f2"
+    android:layout_marginBottom="30dp"
+    >
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary"
+        app:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        android:elevation="10dp"
 
-    <ListView
-        android:id="@+id/list_view_niveau"
+        >
+
+    </android.support.v7.widget.Toolbar>
+    <GridView
+        android:layout_marginTop="90dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:id="@+id/gridview"
+        android:columnWidth="100dp"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"></GridView>
+
 </RelativeLayout>

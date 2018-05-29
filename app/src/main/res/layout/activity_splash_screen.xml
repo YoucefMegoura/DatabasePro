@@ -5,25 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="dz.youcefmegoura.test.databasepro.Views.SplashScreen"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/splash_screen"
+
+
     >
 
-    <TextView
-        android:id="@+id/sphinx"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sphinx"
-        android:textSize="50dp"
-        android:textColor="#f2f2f2"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="for kids"
-        android:textSize="30dp"
-        android:textColor="#f2f2f2"
-        android:layout_below="@+id/sphinx"
-        android:layout_centerHorizontal="true"/>
+
 
 </RelativeLayout>

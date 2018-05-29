@@ -15,13 +15,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Views.MainActivity" />
+        <activity android:name=".Views.MainActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name=".Views.ListeCategories" />
+        <activity android:name=".Views.Menu.AboutUs" />
         <activity android:name=".Views.ListeNiveaux" />
         <activity android:name=".Views.ImageGame" />
         <activity android:name=".Views.Connexion" />
         <activity android:name=".Views.Inscription" />
-        <activity android:name=".Views.SplashScreen">
+        <activity android:name=".Views.SplashScreen"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

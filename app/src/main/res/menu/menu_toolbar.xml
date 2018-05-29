@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+        <item android:id="@+id/setting_id" android:title="@string/setting" />
+        <item android:id="@+id/aboutus_id" android:title="@string/aboutus" />
+        <item android:id="@+id/dashboard_id" android:title="@string/dashboard" />
+        <item android:id="@+id/logout_id" android:title="@string/log_out" />
+
+        <item android:id="@+id/score_id" android:title=""
+            android:icon="@drawable/crown"
+            app:showAsAction="always">
+
+        </item>
+
+        <item android:id="@+id/jeton_id" android:title=""
+            android:icon="@drawable/jeton"
+            app:showAsAction="always">
+
+        </item>
+
+</menu>

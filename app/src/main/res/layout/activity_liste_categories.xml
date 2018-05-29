@@ -1,16 +1,464 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="dz.youcefmegoura.test.databasepro.Views.ListeCategories">
+    tools:context="dz.youcefmegoura.test.databasepro.Views.ListeCategories"
+    android:background="#e5f2f2f2"
+    >
 
-    <ListView
-        android:id="@+id/liste_view_categorie"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/categorieId"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        />
+        xmlns:tools="http://schemas.android.com/tools">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbarStyle="insideOverlay">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <android.support.v7.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:id="@+id/toolbar"
+                    android:background="@color/colorPrimary"
+                    app:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+                    android:elevation="10dp"
+                    >
+                </android.support.v7.widget.Toolbar>
+
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/animals"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:cb_color="#d8dada"
+                    app:cb_pressedRingWidth="8dp"
+                    android:src="@mipmap/animals"
+                    android:layout_marginLeft="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="65dp"
+                    android:clickable="true"
+                    />
+
+                <android.support.v4.widget.ContentLoadingProgressBar
+                    android:id="@+id/progressBar1"
+                    style="?android:progressBarStyleHorizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignStart="@+id/animals"
+                    android:layout_alignTop="@+id/animals"
+                    android:progressDrawable="@drawable/circular"
+                    android:progress="30" />
+                <TextView
+                    android:id="@+id/text_animals"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/animals"
+                    android:layout_centerHorizontal="true"
+                    android:text="Animals"
+                    android:textColor="#403c3c"
+                    android:textSize="15dp"
+                    android:textStyle="bold"/>
+
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/arts"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:cb_color="#d8dada"
+                    app:cb_pressedRingWidth="8dp"
+                    android:layout_below="@+id/animals"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginTop="30dp"
+                    android:clickable="true"
+                    android:src="@mipmap/arts"
+                    />
+
+                <android.support.v4.widget.ContentLoadingProgressBar
+                    android:id="@+id/progressBar2"
+                    style="?android:progressBarStyleHorizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignStart="@+id/arts"
+                    android:layout_alignTop="@+id/arts"
+                    android:progressDrawable="@drawable/circular"
+                    android:progress="60" />
+
+                <TextView
+                    android:id="@+id/text_arts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/arts"
+                    android:layout_marginLeft="92dp"
+                    android:text="Arts"
+                    android:textStyle="bold"
+                    android:textColor="#403c3c"
+                    android:textSize="15dp" />
+
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/communication"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:cb_color="#d8dada"
+                    app:cb_pressedRingWidth="8dp"
+                    android:layout_below="@+id/animals"
+                    android:layout_marginLeft="205dp"
+                    android:layout_marginTop="30dp"
+                    android:clickable="true"
+                    android:src="@mipmap/communication"
+                    />
+
+                <android.support.v4.widget.ContentLoadingProgressBar
+                    android:id="@+id/progressBar3"
+                    style="?android:progressBarStyleHorizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignStart="@+id/communication"
+                    android:layout_alignTop="@+id/communication"
+                    android:progressDrawable="@drawable/circular"
+                    android:progress="20" />
+                <TextView
+                    android:id="@+id/text_communication"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/communication"
+                    android:layout_marginLeft="200dp"
+
+                    android:text="Communication"
+                    android:textColor="#403c3c"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/sport"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:cb_color="#d8dada"
+                    app:cb_pressedRingWidth="8dp"
+                    android:layout_below="@+id/arts"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginTop="45dp"
+                    android:clickable="true"
+                    android:src="@mipmap/sport"
+                    />
+                <android.support.v4.widget.ContentLoadingProgressBar
+                    android:id="@+id/progressBar4"
+                    style="?android:progressBarStyleHorizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignStart="@+id/sport"
+                    android:layout_alignTop="@+id/sport"
+                    android:progressDrawable="@drawable/circular"
+                    android:progress="100" />
+
+                <TextView
+                    android:id="@+id/text_sport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/sport"
+                    android:layout_marginLeft="90dp"
+                    android:text="Sport"
+                    android:textStyle="bold"
+                    android:textColor="#403c3c"
+                    android:textSize="15dp" />
+
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/medical"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:cb_color="#d8dada"
+                    app:cb_pressedRingWidth="8dp"
+                    android:layout_below="@+id/communication"
+                    android:layout_marginLeft="205dp"
+                    android:layout_marginTop="45dp"
+                    android:clickable="true"
+                    android:src="@mipmap/medecine"
+                    />
+                <android.support.v4.widget.ContentLoadingProgressBar
+                    android:id="@+id/progressBar5"
+                    style="?android:progressBarStyleHorizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignStart="@+id/medical"
+                    android:layout_alignTop="@+id/medical"
+                    android:progressDrawable="@drawable/circular"
+                    android:progress="10" />
+
+                <TextView
+                    android:id="@+id/text_medecine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/medical"
+                    android:layout_marginLeft="220dp"
+                    android:text="Medecine"
+                    android:textColor="#403c3c"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/musique"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:cb_color="#d8dada"
+                    app:cb_pressedRingWidth="8dp"
+                    android:layout_below="@+id/animals"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="315dp"
+                    android:clickable="true"
+                    android:src="@mipmap/music"
+                    />
+                <android.support.v4.widget.ContentLoadingProgressBar
+                    android:id="@+id/progressBar6"
+                    style="?android:progressBarStyleHorizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignStart="@+id/musique"
+                    android:layout_alignTop="@+id/musique"
+                    android:progressDrawable="@drawable/circular"
+                    android:progress="50"/>
+
+                <TextView
+                    android:id="@+id/text_musique"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/musique"
+                    android:layout_centerHorizontal="true"
+                    android:text="Musique"
+                    android:textColor="#403c3c"
+                    android:textSize="15dp"
+                    android:textStyle="bold"/>
+
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/transport"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:cb_color="#d8dada"
+                    app:cb_pressedRingWidth="8dp"
+                    android:layout_below="@+id/musique"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginTop="30dp"
+                    android:clickable="true"
+                    android:src="@mipmap/transport"
+                    />
+                <android.support.v4.widget.ContentLoadingProgressBar
+                    android:id="@+id/progressBar7"
+                    style="?android:progressBarStyleHorizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignStart="@+id/transport"
+                    android:layout_alignTop="@+id/transport"
+                    android:progressDrawable="@drawable/circular"
+                    android:progress="0" />
+
+                <TextView
+                    android:id="@+id/text_transport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/transport"
+                    android:layout_marginLeft="75dp"
+                    android:text="Transport"
+                    android:textStyle="bold"
+                    android:textColor="#403c3c"
+                    android:textSize="15dp" />
+
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/informatique"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:cb_color="#d8dada"
+                    app:cb_pressedRingWidth="8dp"
+                    android:layout_below="@+id/musique"
+                    android:layout_marginLeft="205dp"
+                    android:layout_marginTop="30dp"
+                    android:clickable="true"
+                    android:src="@mipmap/informatique"
+                    />
+
+                <android.support.v4.widget.ContentLoadingProgressBar
+                    android:id="@+id/progressBar8"
+                    style="?android:progressBarStyleHorizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignStart="@+id/informatique"
+                    android:layout_alignTop="@+id/informatique"
+                    android:progressDrawable="@drawable/circular"
+                    android:progress="60" />
+
+                <TextView
+                    android:id="@+id/text_informatique"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/informatique"
+                    android:layout_marginLeft="210dp"
+                    android:text="Informatique"
+                    android:textColor="#403c3c"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/nourriture"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:cb_color="#d8dada"
+                    app:cb_pressedRingWidth="8dp"
+                    android:layout_below="@+id/transport"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginTop="45dp"
+                    android:clickable="true"
+
+                    />
+                <android.support.v4.widget.ContentLoadingProgressBar
+                    android:id="@+id/progressBar9"
+                    style="?android:progressBarStyleHorizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignStart="@+id/nourriture"
+                    android:layout_alignTop="@+id/nourriture"
+                    android:progressDrawable="@drawable/circular"
+                    android:progress="20" />
+                <TextView
+                    android:id="@+id/text_nourriture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/nourriture"
+                    android:layout_marginLeft="75dp"
+                    android:text="Nourriture"
+                    android:textStyle="bold"
+                    android:textColor="#403c3c"
+                    android:textSize="15dp"
+                    android:layout_marginBottom="10dp"/>
+
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/science"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:cb_color="#d8dada"
+                    app:cb_pressedRingWidth="8dp"
+                    android:layout_below="@+id/informatique"
+                    android:layout_marginLeft="205dp"
+                    android:layout_marginTop="45dp"
+                    android:clickable="true"
+                    android:src="@mipmap/science"
+
+                    />
+                <android.support.v4.widget.ContentLoadingProgressBar
+                    android:id="@+id/progressBar10"
+                    style="?android:progressBarStyleHorizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignStart="@+id/science"
+                    android:layout_alignTop="@+id/science"
+                    android:progressDrawable="@drawable/circular"
+                    android:progress="3" />
+
+                <TextView
+                    android:id="@+id/text_science"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/science"
+                    android:layout_marginLeft="230dp"
+                    android:text="Science"
+                    android:textColor="#403c3c"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"/>
+
+            </RelativeLayout>
+        </ScrollView>
+        <!-- The main content view
+
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true">
+
+        </FrameLayout>
+         The navigation drawer -->
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/left_drawer"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:background="#FFFFFF">
+            <ImageView
+                android:src="@color/colorPrimaryDark"
+                android:layout_width="75dp"
+                android:layout_height="75dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mimou Moussaoui"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/score"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1800"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/jeton"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    />
+
+            </LinearLayout>
+
+
+
+            <ListView
+                android:id="@+id/lstDrawerItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:choiceMode="singleChoice"
+                android:layout_marginTop="20sp" />
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.DrawerLayout>
 </RelativeLayout>
+
