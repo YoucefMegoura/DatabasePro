@@ -70,7 +70,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
     private MediaPlayer valid_wav, wrog_wav;
     /************************************************/
 
-      @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_game);
@@ -85,6 +85,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         progress = (ProgressBar) findViewById(R.id.progress);
         next_btn = (Button) findViewById(R.id.next_btn);
         progress = (ProgressBar) findViewById(R.id.progress);
+        nom_image_textView = findViewById(R.id.nom_image_textView);
 
         valid_wav = MediaPlayer.create(this, R.raw.wrong);
         wrog_wav = MediaPlayer.create(this, R.raw.valid);
@@ -136,17 +137,17 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         new SetupTask(this).execute();
         /*********************************************************/
 
-        score_tout_categorie.setText("Total points : " + String.valueOf(databaseManager.somme_score_categorie()));
-        jetons_user.setText("Jetons : " + String.valueOf(SharedPref.JETONS_USER));
+        score_tout_categorie.setText(String.valueOf(databaseManager.somme_score_categorie()));
+        jetons_user.setText( String.valueOf(SharedPref.JETONS_USER));
         speak_btn.setEnabled(false);
     }
 
     //Simple methode pour afficher tout les attributs d'une image dans XML ...
     public void afficher_imageObject(int cursseur_id_array_image) {
-        score_text_view.setText("Score : " + String.valueOf(Images_array.get(indice).getScore_image()));
+        score_text_view.setText( String.valueOf(Images_array.get(indice).getScore_image())+"/10");
         int drawableResourceId = this.getResources().getIdentifier(Images_array.get(indice).getUrl_image(), "drawable", this.getPackageName());
         image_view.setImageResource(drawableResourceId);
-        //nom_image_textView.setText("Nom image : " + Images_array.get(indice).getNom_image());
+        nom_image_textView.setText(Images_array.get(indice).getNom_image());
     }
 
     //onClick Button
@@ -191,7 +192,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
                 textToSpeech.speak(mot_a_prononce, TextToSpeech.QUEUE_FLUSH, null);
 
             SharedPref.JETONS_USER -- ;
-            jetons_user.setText("Jetons : " + String.valueOf(SharedPref.JETONS_USER));
+            jetons_user.setText(String.valueOf(SharedPref.JETONS_USER));
         }else{
             ImageButton button = (ImageButton) findViewById(R.id.speak_btn);
             button.setEnabled(false);
@@ -282,7 +283,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
                 final_score = 0;
             }
             databaseManager.changer_score_image(cursseur_id_array_image, (int)(final_score * 2));
-            score_text_view.setText("Score : " + String.valueOf((int)(final_score * 2)));
+            score_text_view.setText( String.valueOf((int)(final_score * 2))+"/10");
 
             /************** Pour changer le score du niveau et de la categorie dans la base de donnée ************/
             //Niveau
@@ -294,7 +295,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
             databaseManager.changer_score_categorie(id_categorie_from_bundle, somme_score_niveau);
 
             //Somme des categories dans l'activité image_activity
-            score_tout_categorie.setText("Total points : " + String.valueOf(databaseManager.somme_score_categorie()));
+            score_tout_categorie.setText( String.valueOf(databaseManager.somme_score_categorie()));
             /*****************************************************************************************************/
 
             next_btn.setVisibility(View.VISIBLE);

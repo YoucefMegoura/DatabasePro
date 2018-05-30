@@ -70,6 +70,7 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
         Bundle bundle = getIntent().getExtras();
         DB_NAME = bundle.getString("DB_NAME");
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Categorie");
         setSupportActionBar(toolbar);
 
         animals= findViewById(R.id.animals);

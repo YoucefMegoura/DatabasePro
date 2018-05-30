@@ -29,6 +29,8 @@
         android:id="@+id/gridview"
         android:columnWidth="100dp"
         android:numColumns="3"
-        android:stretchMode="columnWidth"></GridView>
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="20dp"
+        android:horizontalSpacing="20dp"></GridView>
 
 </RelativeLayout>

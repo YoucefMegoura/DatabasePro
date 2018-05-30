@@ -392,69 +392,97 @@
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"
             android:background="#FFFFFF">
-            <ImageView
-                android:src="@color/colorPrimaryDark"
-                android:layout_width="75dp"
-                android:layout_height="75dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mimou Moussaoui"
-                android:textColor="@color/colorWhite"
-                android:textStyle="bold"
-
-                />
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:orientation="vertical"
+                android:background="@drawable/bg_inscr">
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/score"
-                    />
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/profile"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="20dp"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1800"
-                    android:paddingLeft="10dp"
+                    android:text="Mimou Moussaoui"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold"
-                    android:layout_marginTop="5dp"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="28dp"
-                    android:src="@drawable/jeton"
                     />
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5"
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/colorWhite"
-                    android:textStyle="bold"
-                    android:layout_marginTop="5dp"
-                    />
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/score"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1800"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
+                        android:layout_marginTop="5dp"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/jeton"
+                        android:layout_marginLeft="10dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
+                        android:layout_marginTop="5dp"
+                        />
+
+                </LinearLayout>
 
             </LinearLayout>
-
-
 
             <ListView
                 android:id="@+id/lstDrawerItems"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:choiceMode="singleChoice"
-                android:layout_marginTop="20sp" />
+                android:layout_marginTop="8dp"
+                android:dividerHeight="8dp"
+
+                />
+
+            <Button
+                android:id="@+id/ajouter_une_langue_btn"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="#ffffff"
+                android:text="Ajouter une langue"
+                android:textSize="12dp"
+                android:textColor="#cdcdcdcd"
+                android:drawableStart="@mipmap/add_langue"
+
+                />
 
         </LinearLayout>
 

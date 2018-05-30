@@ -3,7 +3,10 @@ package dz.youcefmegoura.test.databasepro.Views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -11,12 +14,14 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import dz.youcefmegoura.test.databasepro.Database.DatabaseManager;
 import dz.youcefmegoura.test.databasepro.Objects.Niveau;
 import dz.youcefmegoura.test.databasepro.R;
+import dz.youcefmegoura.test.databasepro.Views.Menu.AboutUs;
 
 /**
  * Created by Youcef Mégoura and Moussaoui Mekka on 21/04/2018.
@@ -28,6 +33,7 @@ public class ListeNiveaux extends AppCompatActivity {
     private DatabaseManager databaseManager;
     private int id_categorie_from_bundle;
     private GridView gridView;
+    Toolbar toolbar;
 
 
     @Override
@@ -44,7 +50,49 @@ public class ListeNiveaux extends AppCompatActivity {
 
         /************************************************/
         databaseManager = new DatabaseManager( this , ListeCategories.DB_NAME);
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Niveau");
+        setSupportActionBar(toolbar);
+
+
     }
+    //creation Menu toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar,menu);
+        return true;
+
+    }
+
+    //select item menu toolbar
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent myintent;
+        int id = item.getItemId();
+        switch (id){
+            case R.id.setting_id:
+                Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.aboutus_id:
+                myintent= new Intent(this, AboutUs.class);
+                startActivity(myintent);
+                break;
+            case R.id.dashboard_id:
+                Toast.makeText(this, "dashboard", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.logout_id:
+                Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
 
     @Override
     protected void onResume() {
