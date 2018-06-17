@@ -13,18 +13,21 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:onClick="back_click"
+            android:background="@mipmap/back"
+
+
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="About Us"
-            android:layout_marginTop="11dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginLeft="10dp"
             android:textSize="23dp"
             android:textStyle="bold"
             android:textColor="#f2f2f2"/>
@@ -33,7 +36,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <ImageView
             android:layout_width="150dp"
@@ -47,15 +51,11 @@
             android:layout_height="320dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="28dp"
-            android:background="#73f2f2f2"
             android:textColor="#ffffff"
             android:textSize="15dp"
+            android:textStyle="bold"
             android:textAlignment="center"
-           android:text="Sphinx For Kids App divertira vos enfants tout en les permettant d'ameliorer leurs prononciations dans de différentes langues étrangère, ou même vous servir comme un aide à l'éducation ou un Quiz de l'ecole de base de connaissance!
-
-    Les enfants seront ravis de jouer à ce jeu incroyable pour les tout-petits! Mais, c'est aussi un jeu parfait pour les adultes! Si vous êtes à la recherche d'un bon moment avec votre smartphone, obtenez-le maintenant et vous ne vous ennuierez plus jamais pendant le déjeuner ou en attendant le bus!
-
-nous aimons notre enfant, aimons-nous Sphinx For Kids App"  />
+           android:text="Sphinx For Kids App divertira vos enfants tout en les permettant d'ameliorer leurs prononciations dans de différentes langues étrangère, ou même vous servir comme un aide à l'éducation ou un Quiz de l'ecole de base de connaissance! Les enfants seront ravis de jouer à ce jeu incroyable pour les tout-petits! Mais, c'est aussi un jeu parfait pour les adultes! Si vous êtes à la recherche d'un bon moment avec votre smartphone, obtenez-le maintenant et vous ne vous ennuierez plus jamais pendant le déjeuner ou en attendant le bus nous aimons notre enfant, aimons-nous Sphinx For Kids App"  />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

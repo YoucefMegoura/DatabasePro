@@ -5,37 +5,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="dz.youcefmegoura.test.databasepro.Views.ChoisirLangue">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary"
+        app:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        android:elevation="10dp"
+        >
 
-
-    <Button
-        android:id="@+id/english_btn"
+    </android.support.v7.widget.Toolbar>
+    <ListView
+        android:id="@+id/listView_langue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        />
+    <TextView
+        android:id="@+id/txtView"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="74dp"
-        android:onClick="englishClick"
-        android:text="ENG" />
+        android:text="Comming soon : "
+        android:textSize="40dp"
+        android:layout_below="@+id/listView_langue"
+        />
 
-    <Button
-        android:id="@+id/french_btn"
+    <ScrollView
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/english_btn"
-        android:layout_below="@+id/english_btn"
-        android:layout_marginTop="64dp"
-        android:onClick="frenchClick"
-        android:text="FR" />
+        android:layout_below="@id/txtView"
+        android:layout_centerHorizontal="true">
 
-    <Button
-        android:id="@+id/german_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/french_btn"
-        android:layout_below="@+id/french_btn"
-        android:layout_marginTop="64dp"
-        android:onClick="germanClick"
-        android:text="FR" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
 
 
+            <Button
+                android:id="@+id/italian_btn"
+                android:layout_width="290dp"
+                android:layout_height="78dp"
+               android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/italian"
+                />
+            <Button
+                android:id="@+id/spanish_btn"
+                android:layout_width="290dp"
+                android:layout_height="78dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/spanish" />
+            <Button
+                android:id="@+id/portugais_btn"
+                android:layout_width="290dp"
+                android:layout_height="78dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+
+                android:background="@drawable/portugais" />
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

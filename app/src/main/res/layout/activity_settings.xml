@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_inscr"
+    tools:context="dz.youcefmegoura.test.databasepro.Views.SettingsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:onClick="back_click"
+            android:background="@mipmap/back"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Paramètre"
+            android:layout_marginTop="13dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            android:textColor="#f2f2f2"
+
+            />
+    </LinearLayout>
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/settings"
+            android:paddingLeft="20dp"
+            android:text="Pseudo"
+            android:paddingTop="12dp"
+            android:textColor="#ffffff"
+            android:textSize="18dp"
+            />
+        <TextView
+            android:id="@+id/changer_pseudo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="#4dc0f7"
+            android:layout_marginTop="93dp"
+            android:layout_marginLeft="170dp"/>
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:onClick="EditPseudo"
+            android:layout_marginTop="89dp"
+            android:layout_marginLeft="280dp"
+            android:background="@drawable/edit"/>
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="140dp"
+        android:background="@drawable/settings"
+        android:paddingLeft="20dp"
+        android:text="Avatar"
+        android:paddingTop="12dp"
+        android:textColor="#ffffff"
+        android:textSize="18dp"
+        />
+    <ImageView
+        android:id="@+id/image_avatar"
+        android:layout_width="40dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="147dp"
+        android:layout_marginLeft="170dp"/>
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/edit"
+        android:onClick="EditAvatar"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="280dp"
+        />
+
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/settings"
+        android:paddingLeft="20dp"
+        android:text="Son"
+        android:paddingTop="12dp"
+        android:textColor="#f2f7f7"
+        android:textSize="18dp"
+        />
+    <ImageView
+        android:id="@+id/sonOn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="217dp"
+        android:layout_marginLeft="180dp"/>
+    <Switch
+        android:id="@+id/switch_sound"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="213dp"
+        android:layout_marginLeft="270dp"
+
+        />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="260dp"
+        android:background="@drawable/settings"
+        android:paddingLeft="20dp"
+        android:text="Notification"
+        android:paddingTop="12dp"
+        android:textColor="#f2f7f7"
+        android:textSize="18dp"
+        />
+
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/notification"
+        android:layout_marginTop="275dp"
+        android:layout_marginLeft="180dp"/>
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="273dp"
+        android:layout_marginLeft="270dp"
+
+        />
+
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="320dp"
+        android:background="@drawable/settings"
+        android:paddingLeft="20dp"
+        android:text="Difficulté"
+        android:paddingTop="12dp"
+        android:textColor="#f2f7f7"
+        android:textSize="18dp"
+        />
+    <TextView
+        android:id="@+id/difficult_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColor="#4dc0f7"
+        android:layout_marginTop="335dp"
+        android:layout_marginLeft="180dp"/>
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/controls"
+        android:onClick="Editdifficulté"
+        android:layout_marginTop="330dp"
+        android:layout_marginLeft="280dp"/>
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="420dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_seconnecter"/>
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="420dp"
+        android:background="@drawable/ok"
+        android:layout_marginLeft="162dp"/>
+
+
+
+
+</RelativeLayout>

@@ -28,7 +28,7 @@ public class SlideAdapter extends PagerAdapter{
     //Arrays
     public int[] slide_image = {
             R.drawable.title,
-            R.drawable.cat,
+            R.drawable.categorie_for_slide,
             R.drawable.score,
             R.drawable.jeton
 
@@ -37,7 +37,7 @@ public class SlideAdapter extends PagerAdapter{
             "L'enseignement gratuit de la prononciation des langues étrangères.",
             "L'apprentissage par le jeu. Avance en débloquant de petites unités.",
             "Finis chaque niveau en gagnant des point permettant de debloquer les niveaux suivant ",
-            "Gagne des jetons et les utiliser pour l'aide ....... "
+            "Gagne des jetons et les utiliser pour l'aide de la prononciation "
     };
 
     @Override

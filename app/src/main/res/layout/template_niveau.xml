@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
+    android:layout_width="110dp"
     android:layout_height="140dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginLeft="20dp"
     android:layout_marginTop="20dp"
     android:layout_marginBottom="20dp"
     android:layout_marginRight="20dp"
-    android:background="@drawable/niveau_shape">
+    android:background="@drawable/niveau_shape"
+    android:elevation="10dp"
+    android:id="@+id/layout">
 
     <TextView
         android:id="@+id/id_niveau"
@@ -25,13 +27,24 @@
         android:layout_height="wrap_content"
         app:srb_starSize="25dp"
         app:srb_numberOfStars="3"
-        app:srb_rating="2"
+        android:clickable="false"
         android:layout_marginTop="65dp"
         app:srb_stepSize="1"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="6dp"
         app:srb_borderColor="#ffffff"
         app:srb_fillColor="#fba926"
         android:layout_alignParentRight="true"
+        app:srb_isIndicator="true"
         />
+
+    <ImageView
+        android:id="@+id/Locked_IV"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:background="#22000000"
+        app:srcCompat="@drawable/ic_lock_outline_black_24dp" />
 
 </RelativeLayout>

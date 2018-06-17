@@ -1,7 +1,13 @@
 package dz.youcefmegoura.test.databasepro.Views;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +25,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hitomi.cmlibrary.CircleMenu;
+import com.hitomi.cmlibrary.OnMenuSelectedListener;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -34,22 +43,32 @@ import edu.cmu.pocketsphinx.Hypothesis;
 import edu.cmu.pocketsphinx.RecognitionListener;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
+import es.dmoral.toasty.Toasty;
+
 
 /**
  * Created by Youcef Mégoura and Moussaoui Mekka on 21/04/2018.
  */
 
 public class ImageGame extends AppCompatActivity implements RecognitionListener {
+    private static int JETON_BEGIN = 12;
     /********  Shared Preferences  ************/
-
+    private static final String USER_PREFS = "PREFS";
+    private static final String PREF_JETON = "JETON_PREFS";
+    private int jeton_from_pref ;
+    private SharedPreferences sharedPreferences;
     /********************************************/
 
     /******************* XML References ******************/
     private ImageView image_view;
-    private TextView score_text_view, nom_image_textView, score_tout_categorie, jetons_user;
+    private TextView score_text_view, nom_image_textView, score_tout_categorie, jetons_user,
+            congart_score;
     private ImageButton speak_btn;
     private ProgressBar progress;
     private Button next_btn;
+    private Dialog myDialog, dialog, exitdialog;
+    Button Oui, Non, next, share, yes, no;
+
     /*****************************************************/
 
     /***************** To Get from Bundle ****************/
@@ -67,7 +86,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
 
 
     /*****************Music player******************/
-    private MediaPlayer valid_wav, wrog_wav;
+    private MediaPlayer valid_wav, wrog_wav, congratulation_wav;
     /************************************************/
 
     @Override
@@ -75,9 +94,24 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_game);
 
+
+        /*********** Initialisation Shared preferences ***********/
+        sharedPreferences = getBaseContext().getSharedPreferences(USER_PREFS, MODE_PRIVATE);
+        if (sharedPreferences.contains(PREF_JETON)) {
+            jeton_from_pref = sharedPreferences.getInt(PREF_JETON, 0);
+        }else{
+            sharedPreferences
+                    .edit()
+                    .putInt(PREF_JETON, JETON_BEGIN )
+                    .apply();
+        }
+        /******************************************************/
+
+
         choix_language(ListeCategories.DB_NAME);
         /*************** XML References ******************/
         score_text_view = (TextView) findViewById(R.id.score_text_view);
+        congart_score= (TextView)findViewById(R.id.congarat_score);
         image_view = (ImageView) findViewById(R.id.image_view);
         score_tout_categorie = (TextView) findViewById(R.id.score_tout_categorie);
         jetons_user = (TextView) findViewById(R.id.jetons_user);
@@ -89,8 +123,11 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
 
         valid_wav = MediaPlayer.create(this, R.raw.wrong);
         wrog_wav = MediaPlayer.create(this, R.raw.valid);
+        congratulation_wav = MediaPlayer.create(this, R.raw.congratulation);
 
         /************************************************/
+
+
 
         /***************** Get from Bundle ****************/
         Bundle bundle = getIntent().getExtras();
@@ -138,7 +175,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         /*********************************************************/
 
         score_tout_categorie.setText(String.valueOf(databaseManager.somme_score_categorie()));
-        jetons_user.setText( String.valueOf(SharedPref.JETONS_USER));
+        jetons_user.setText( String.valueOf(jeton_from_pref));
         speak_btn.setEnabled(false);
     }
 
@@ -153,6 +190,8 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
     //onClick Button
     public void startClick(View view) {
         recognizer.stop();
+        speak_btn.setBackgroundResource(R.drawable.mic_blue_round);
+        speak_btn.setEnabled(false);
         recognizer.startListening(WORD_SEARCH, 5000);
     }
 
@@ -160,14 +199,17 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
     public void nextClick(View view) {
         if (indice == Images_array.size() - 1) {
             next_btn.setVisibility(View.GONE);
-            Toast.makeText(this, "level over", Toast.LENGTH_SHORT).show();
+
+            congratulation_wav.start();
+            congratulationAlertDialog();
+
+
         }else
             indice++;
         cursseur_id_array_image = Images_array.get(indice).getId_image();
         afficher_imageObject(cursseur_id_array_image);
 
         next_btn.setVisibility(View.GONE);
-
     }
 
     //onClick Button
@@ -179,27 +221,6 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         cursseur_id_array_image = Images_array.get(indice).getId_image();
         afficher_imageObject(cursseur_id_array_image);
     }*/
-    //load the next image
-
-
-    //onClick Button
-    public void textTospeechClick(View view) {
-        if (SharedPref.JETONS_USER > 0 ){
-            String mot_a_prononce = Images_array.get(indice).getNom_image();
-            if (mot_a_prononce == null || mot_a_prononce.length() == 0) {
-                Toast.makeText(this, "Some Error occured !", Toast.LENGTH_SHORT).show();
-            } else
-                textToSpeech.speak(mot_a_prononce, TextToSpeech.QUEUE_FLUSH, null);
-
-            SharedPref.JETONS_USER -- ;
-            jetons_user.setText(String.valueOf(SharedPref.JETONS_USER));
-        }else{
-            ImageButton button = (ImageButton) findViewById(R.id.speak_btn);
-            button.setEnabled(false);
-            button.setClickable(false);
-        }
-
-    }
 
     /*
     *
@@ -252,11 +273,15 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
 
 
     @Override
-    public void onBeginningOfSpeech() {    }
+    public void onBeginningOfSpeech() {
+
+    }
 
     @Override
     public void onEndOfSpeech() {
         recognizer.stop();
+        speak_btn.setEnabled(true);
+        speak_btn.setBackgroundResource(R.drawable.mic_round);
     }
 
     @Override
@@ -275,15 +300,15 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         String mot_a_prononce = Images_array.get(indice).getNom_image();
         if (hypothesis != null) {
             if(if_word_correct(mot_a_prononce, hypothesis)) {
-                String text = hypothesis.getHypstr();
-                Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+
+                Toasty.success(this,"Ta prononciation est correcte",Toast.LENGTH_SHORT).show();
                 final_score = getScoreStars(score);
             }else {
-                Toast.makeText(this, "mot incorrect !!", Toast.LENGTH_SHORT).show();
+                Toasty.error(this,"Ta prononciation est incorrecte",Toast.LENGTH_SHORT).show();
                 final_score = 0;
             }
-            databaseManager.changer_score_image(cursseur_id_array_image, (int)(final_score * 2));
-            score_text_view.setText( String.valueOf((int)(final_score * 2))+"/10");
+            databaseManager.changer_score_image(cursseur_id_array_image, (int)(final_score));
+            score_text_view.setText( String.valueOf((int)(final_score))+"/10");
 
             /************** Pour changer le score du niveau et de la categorie dans la base de donnée ************/
             //Niveau
@@ -301,7 +326,6 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
             next_btn.setVisibility(View.VISIBLE);
             progress.setProgress((indice + 1) * 100 / Images_array.size());
 
-            //TODO : wrong ....
             if(final_score != 0){
                 wrog_wav.start();
             }else{
@@ -323,8 +347,13 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
     }
 
     public void closeBtn(View view) {
-        finish();
+        Exit_image_game_alert();
     }
+
+    public void SpeakIt_Click(View view) {
+        textToSpeechAlertDialog();
+    }
+
 
     private class SetupTask extends AsyncTask<Void, Void, Exception> {
         WeakReference<ImageGame> activityReference;
@@ -387,20 +416,28 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
 
     ////////////////////////////////////////////////////
     public float getScoreStars(int getBestScore){
-        if (getBestScore <= 0 && getBestScore > -1000)
-            return 3.0f;
-        else if (getBestScore <= -1000 && getBestScore > -2000)
-            return 2.5f;
-        else if (getBestScore <= -2000 && getBestScore > -3000)
-            return 2;
-        else if (getBestScore <= -3000 && getBestScore > -4000)
-            return 1.5f;
-        else if (getBestScore <= -4000 && getBestScore > -5000)
-            return 1;
+        if (getBestScore <= 0 && getBestScore > -500)
+            return 10f;
+        else if (getBestScore <= -500 && getBestScore > -1000)
+            return 9f;
+        else if (getBestScore <= -1000 && getBestScore > -1500)
+            return 8;
+        else if (getBestScore <= -1500 && getBestScore > -2500)
+            return 7f;
+        else if (getBestScore <= -2500 && getBestScore > -3500)
+            return 6;
+        else if (getBestScore <= -3500 && getBestScore > -5000)
+            return 5f;
         else if (getBestScore <= -5000 && getBestScore > -6000)
-            return 0.5f;
+            return 4f;
+        else if (getBestScore <= -6000 && getBestScore > -7000)
+            return 3f;
+        else if (getBestScore <= -7000 && getBestScore > -8000)
+            return 2f;
+        else if (getBestScore <= -8000 && getBestScore > -9000)
+            return 1f;
         else
-            return 0;
+            return 0f;
     }
     ///////////////////////////////////////////////////
 
@@ -411,4 +448,129 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
             return false;
     }
     /////////////////////////////////////////////////////
+
+    //Custum Alert Dialog
+    public void congratulationAlertDialog(){
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.congratultion);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        next = (Button)dialog.findViewById(R.id.next_btn);
+        share =(Button)dialog.findViewById(R.id.share_btn) ;
+
+        jeton_from_pref += 5;
+
+        sharedPreferences
+                .edit()
+                .putInt(PREF_JETON, jeton_from_pref)
+                .apply();
+
+
+
+        next.setEnabled(true);
+        share.setEnabled(true);
+
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                dialog.cancel();
+            }
+        });
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(ImageGame.this, ShareScore.class));
+
+            }
+        });
+        dialog.show();
+    }
+    //////////////////////////////exitimage game//////////////////////////////////////////
+    public void Exit_image_game_alert(){
+        exitdialog = new Dialog(this);
+        exitdialog.setContentView(R.layout.quitter_image_game_dialog);
+
+        exitdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        yes = (Button) exitdialog.findViewById(R.id.yes_btn1);
+        no = (Button) exitdialog.findViewById(R.id.no_btn1);
+
+
+        yes.setEnabled(true);
+        no.setEnabled(true);
+
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exitdialog.cancel();
+                finish();
+
+            }
+        });
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exitdialog.cancel();
+            }
+        });
+        exitdialog.show();
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void textToSpeechAlertDialog(){
+        myDialog = new Dialog(this);
+        myDialog.setContentView(R.layout.speak_it_dialog);
+
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Oui = (Button)myDialog.findViewById(R.id.oui_btn);
+        Non = (Button)myDialog.findViewById(R.id.non_btn);
+
+        Oui.setEnabled(true);
+        Non.setEnabled(true);
+
+        Oui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (jeton_from_pref > 0 ){
+                    String mot_a_prononce = Images_array.get(indice).getNom_image();
+                    if (mot_a_prononce == null || mot_a_prononce.length() == 0) {
+                        Toast.makeText(ImageGame.this, "some Error occured", Toast.LENGTH_SHORT).show();
+                    } else
+                        textToSpeech.speak(mot_a_prononce, TextToSpeech.QUEUE_FLUSH, null);
+
+                    jeton_from_pref -- ;
+                    jetons_user.setText(String.valueOf(jeton_from_pref));
+
+                    sharedPreferences
+                            .edit()
+                            .putInt(PREF_JETON, jeton_from_pref)
+                            .apply();
+
+                }else{
+                    ImageButton button = (ImageButton) findViewById(R.id.speak_btn);
+                    button.setEnabled(false);
+                    button.setClickable(false);
+                }
+                myDialog.cancel();
+            }
+
+        });
+
+        Non.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.cancel();
+            }
+        });
+        myDialog.show();
+    }
 }
+
+

@@ -9,14 +9,26 @@ public class Categorie{
     private int id_categorie;
     private String nom_categorie;
     private int score_categorie;
+    private int Image;
+
+    public int getImage() {
+        return Image;
+    }
+
+    public void setImage(int image) {
+        Image = image;
+    }
+
+    public Categorie() {
+    }
 
     //Constructeur
     public Categorie(int id_categorie, String nom_categorie, int score_categorie) {
         this.id_categorie = id_categorie;
         this.nom_categorie = nom_categorie;
         this.score_categorie = score_categorie;
-    }
 
+    }
 
     //Guetters & Setters
     public int getId_categorie() {

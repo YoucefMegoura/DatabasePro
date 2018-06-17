@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="dz.youcefmegoura.test.databasepro.Views.Dashboared"
+    android:background="@drawable/bg_inscr">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="100dp"
+            android:src="@drawable/title"/>
+
+        <Button
+            android:id="@+id/commencer_btn"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/button_sinscrire_jaiuncompte"
+            android:clickable="true"
+            android:onClick="Jouer_btn"
+            android:text="Jouer"
+            android:textColor="#f2f7f7"
+            android:textSize="18dp"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:onClick="multijouer_btn"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/button_login"
+            android:text="Multijoueurs 1 à 1"
+            android:textSize="18dp"
+            android:textColor="#4dc0f7"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:onClick="choisir_langue_btn"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/button_login"
+            android:text="choisir le langage"
+            android:textSize="18dp"
+            android:textColor="#4dc0f7"/>
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:onClick="Statistiques_btn"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/button_login"
+            android:text="Statistiques"
+            android:textSize="18dp"
+            android:textColor="#4dc0f7"/>
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:onClick="Exit_btn"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/button_login"
+            android:text="Quitter"
+            android:textSize="18dp"
+            android:textColor="#4dc0f7"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="23dp"
+                android:layout_marginLeft="50dp"
+                android:src="@mipmap/settings"/>
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:background="#00000000"
+                android:text="Paramètres"
+                android:onClick="Settings_btn"
+                android:textSize="17dp"
+                android:textColor="#fba926"
+                />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="23dp"
+                android:layout_marginLeft="20dp"
+                android:src="@mipmap/aboutus"/>
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_width="100dp"
+                android:onClick="About_us_btn"
+                android:layout_height="60dp"
+                android:background="#00000000"
+                android:text="à propos"
+                android:textSize="17dp"
+                android:textColor="#fba926"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -115,7 +115,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         cursor.moveToFirst();
         while( ! cursor.isAfterLast() ) {
             Categorie categorie = new Categorie( cursor.getInt( 0 ), cursor.getString( 1 ),
-                    cursor.getInt( 2 )  );
+                    cursor.getInt( 2 ));
             arrayList_categories.add( categorie );
             cursor.moveToNext();
         }
@@ -211,6 +211,22 @@ public class DatabaseManager extends SQLiteOpenHelper {
         String strSql = "UPDATE 'categorie' SET 'score_categorie'=" + nouveau_score_categorie + " WHERE id_categorie=" + id_categorie + ";";
         this.getWritableDatabase().execSQL(strSql);
         Log.i( "DATABASE", "changer_score_categorie invoked" );
+    }
+
+    public int combien_dimage_dans_niveau(int id_categorie, int id_niveau){
+        int count = 0;
+
+        Cursor cursor = this.getReadableDatabase().query( "image",
+                new String[] { "count(id_image)" },
+                "id_niveau = "+id_niveau+" and id_categorie =" + id_categorie, null, null, null, null, null );
+        cursor.moveToFirst();
+        while( ! cursor.isAfterLast() ) {
+            count = cursor.getInt( 0 );
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return count;
     }
 
     /*

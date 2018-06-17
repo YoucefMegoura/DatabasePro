@@ -50,15 +50,12 @@ public class Connexion extends AppCompatActivity {
         /**************************************************/
 
         sharedPreferences = getSharedPreferences("int", MODE_PRIVATE);
-
-        int a = sharedPreferences.getInt("integer", 0);
-        Toast.makeText(this, String.valueOf(a), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        //Check if user is signed in (non-null) and update UI accordingly.
         //FirebaseUser currentUser = auth_firebase.getCurrentUser();
         //updateUI(currentUser);
     }
@@ -84,7 +81,7 @@ public class Connexion extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
-                        Intent myintent= new Intent(Connexion.this,ListeCategories.class);
+                        Intent myintent= new Intent(Connexion.this,Dashboared.class);
                         startActivity(myintent);
                         Log.d("Firebase", "signInWithEmail:success");
                     }else{

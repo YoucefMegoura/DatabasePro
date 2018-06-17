@@ -16,12 +16,20 @@
         android:background="@color/colorPrimary"
         app:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         android:elevation="10dp"
+        app:title="Niveaux"
 
         >
 
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:onClick="back_click"
+            android:background="@mipmap/back_gris"/>
+
     </android.support.v7.widget.Toolbar>
     <GridView
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="120dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_width="match_parent"
@@ -32,5 +40,6 @@
         android:stretchMode="columnWidth"
         android:verticalSpacing="20dp"
         android:horizontalSpacing="20dp"></GridView>
+
 
 </RelativeLayout>

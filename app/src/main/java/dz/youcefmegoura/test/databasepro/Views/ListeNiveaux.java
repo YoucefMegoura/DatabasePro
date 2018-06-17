@@ -12,9 +12,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 
 import java.util.ArrayList;
 
@@ -51,7 +55,6 @@ public class ListeNiveaux extends AppCompatActivity {
         /************************************************/
         databaseManager = new DatabaseManager( this , ListeCategories.DB_NAME);
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Niveau");
         setSupportActionBar(toolbar);
 
 
@@ -105,7 +108,13 @@ public class ListeNiveaux extends AppCompatActivity {
         databaseManager.close();
     }
 
+    public void back_click(View view) {
+        finish();
+    }
+
     class CustAdapt extends BaseAdapter {
+
+        private final static int SCORE_TO_UNLOCK_LEVEL = 20;
 
         ArrayList<Niveau> items = new ArrayList<>();
 
@@ -133,9 +142,18 @@ public class ListeNiveaux extends AppCompatActivity {
             View myView = myInflater.inflate(R.layout.template_niveau, null);
 
             TextView id_niveau = myView.findViewById(R.id.id_niveau);
+            SimpleRatingBar simpleRatingBar = myView.findViewById(R.id.ratingBarID);
+            ImageView imageView = myView.findViewById(R.id.Locked_IV);
+            id_niveau.setText(String.valueOf(position + 1));
+            simpleRatingBar.setRating(items.get(position).getScore_niveau()/(databaseManager.combien_dimage_dans_niveau(id_categorie_from_bundle, items.get(position).getId_niveau())));
 
+            if( position != 0 && items.get(position - 1).getScore_niveau() < SCORE_TO_UNLOCK_LEVEL){
+                imageView.setVisibility(View.VISIBLE);
+                //TODO : set enabled
+                myView.setEnabled(false);
+                myView.setOnClickListener(null);
+            }
 
-            id_niveau.setText(String.valueOf(items.get(position).getId_niveau()));
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

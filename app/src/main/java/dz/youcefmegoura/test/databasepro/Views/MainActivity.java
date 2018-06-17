@@ -32,13 +32,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        int a = 5;
+
 
       //  databaseManager = new DatabaseManager(this);
 
         sharedPreferences = getSharedPreferences("int", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        editor.putInt("integer", a);
         editor.apply();
 
         //SlideLayout
@@ -88,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
 
     // onCLick Button
     public void commencer_click(View view) {
-        startActivity(new Intent(this, ChoisirLangue.class));
+        startActivity(new Intent(this, Dashboared.class));
+        finish();
     }
 
     public void sinscrire_click(View view) {

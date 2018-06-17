@@ -3,6 +3,7 @@ package dz.youcefmegoura.test.databasepro.Views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,8 +22,10 @@ import java.util.ArrayList;
 
 import at.markushi.ui.CircleButton;
 import dz.youcefmegoura.test.databasepro.Database.DatabaseManager;
+import dz.youcefmegoura.test.databasepro.Database.LangueDBM;
 import dz.youcefmegoura.test.databasepro.Database.PopulateDatabase;
 import dz.youcefmegoura.test.databasepro.Objects.Categorie;
+import dz.youcefmegoura.test.databasepro.Objects.Langue;
 import dz.youcefmegoura.test.databasepro.R;
 import dz.youcefmegoura.test.databasepro.Views.Menu.AboutUs;
 
@@ -36,6 +39,8 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
     private DatabaseManager databaseManager;
     protected static String DB_NAME;
 
+    private LangueDBM langueDBM;
+
     ListView ls;
 
     Toolbar toolbar;
@@ -46,11 +51,10 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
     CircleButton animals ,arts,communication , sport,medecine,musique,
             transport,informatique,nourriture,science;
 
-
     ////////////////////////////////////////////////////////////////////////
     private DrawerLayout mdrawerlayout;
     private ActionBarDrawerToggle mtoggle;
-    ArrayList<Integer> images_list = new ArrayList<>();
+    ArrayList<Langue> images_list_langue = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,20 +62,13 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_liste_categories);
 
 
-        images_list.add(R.drawable.french);
-        images_list.add(R.drawable.italian);
-        images_list.add(R.drawable.german);
-
-        CustAdapt cus = new CustAdapt(this, images_list);
-        ls = (ListView) findViewById(R.id.lstDrawerItems);
-        ls.setAdapter(cus);
-
 
         Bundle bundle = getIntent().getExtras();
         DB_NAME = bundle.getString("DB_NAME");
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Categorie");
         setSupportActionBar(toolbar);
+
 
         animals= findViewById(R.id.animals);
         arts= findViewById(R.id.arts);
@@ -86,6 +83,7 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
 
 
         animals.setOnClickListener(this);
+
         arts.setOnClickListener(this);
         communication.setOnClickListener(this);
         sport.setOnClickListener(this);
@@ -139,6 +137,8 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
 
 
     }
+
+
     /////////////////////////////////////////////////////////////////////////////////
     //creation Menu toolbar
     @Override
@@ -164,7 +164,9 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
                 startActivity(myintent);
                 break;
             case R.id.dashboard_id:
-                Toast.makeText(this, "dashboard", Toast.LENGTH_SHORT).show();
+                myintent= new Intent(this, Dashboared.class);
+                startActivity(myintent);
+
                 break;
             case R.id.logout_id:
                 Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
@@ -186,6 +188,14 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
         text_animals.setText(String.valueOf(Categories_array.get(0).getNom_categorie()));
         text_arts.setText(String.valueOf(Categories_array.get(1).getNom_categorie()));
         text_communication.setText(String.valueOf(Categories_array.get(2).getNom_categorie()));
+
+
+
+        langueDBM = new LangueDBM(this);
+        images_list_langue.addAll(langueDBM.get_selected_langues());
+        CustAdapt cus = new CustAdapt(this, images_list_langue);
+        ls = (ListView) findViewById(R.id.lstDrawerItems);
+        ls.setAdapter(cus);
 
     }
     @Override
@@ -215,10 +225,14 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    public void ajouter_une_langue_btn(View view) {
+        startActivity(new Intent(this, ChoisirLangue.class));
+    }
+
 
     class CustAdapt extends BaseAdapter {
 
-        ArrayList<Integer> items = new ArrayList<>();
+        ArrayList<Langue> items = new ArrayList<>();
         Context context;
 
         CustAdapt(Context context,ArrayList items){
@@ -247,28 +261,22 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
             View myView = myInflater.inflate(R.layout.drawer_menu, null);
 
             ImageView imageView = (ImageView) myView.findViewById(R.id.image_id);
+            int drawableResourceId = getResources().getIdentifier(items.get(position).getUrl_image_langue(), "drawable", getPackageName());
 
-            imageView.setImageResource(items.get(position));
+            imageView.setImageResource(drawableResourceId);
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(ListeCategories.this, String.valueOf(items.get(position)), Toast.LENGTH_SHORT).show();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("DB_NAME", images_list_langue.get(position).getDb_name());
+                    finish();
+                    Intent intent = new Intent(ListeCategories.this, ListeCategories.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
             });
 
-//            nom_niveau.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    //Toast.makeText(Main.this, LevelScore_array.get(position).getName(), Toast.LENGTH_SHORT).show();
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("id_niveau", ListeNiveaux_array.get(position).getId_niveau());
-//                    bundle.putInt("id_categorie", id_categorie_from_bundle);
-//                    Intent intent = new Intent(ListeNiveaux.this, ImageGame.class);
-//                    intent.putExtras(bundle);
-//                    startActivity(intent);
-//                }
-//            });
             return myView;
         }
     }

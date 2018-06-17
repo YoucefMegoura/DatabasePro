@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="dz.youcefmegoura.test.databasepro.Views.Statistiques">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="#e0f79e04">
+
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="110dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+        <!--android:src="@drawable/statistique"-->
+
+    </RelativeLayout>
+
+<ExpandableListView
+    android:id="@+id/list_viewStat"
+    android:layout_marginTop="170dp"
+    android:background="@color/colorPrimary"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"></ExpandableListView>
+
+</RelativeLayout>
