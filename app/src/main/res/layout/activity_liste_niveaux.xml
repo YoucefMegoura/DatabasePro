@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context="dz.youcefmegoura.test.databasepro.Views.ListeNiveaux"
     android:background="#e5f2f2f2"
-    android:layout_marginBottom="30dp"
     >
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
@@ -17,29 +16,42 @@
         app:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         android:elevation="10dp"
         app:title="Niveaux"
-
         >
-
-        <ImageButton
+        <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+            android:layout_marginRight="9000dp"
+        android:layout_alignStart="@+id/gridview"
+        android:background="@mipmap/back_gris"
+        android:onClick="back_click" />
+        <Button
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:onClick="back_click"
-            android:background="@mipmap/back_gris"/>
+            android:layout_marginRight="000dp"
+            android:layout_alignStart="@+id/gridview"
+            android:background="@mipmap/back_gris"
+            android:onClick="back_click" />
+
 
     </android.support.v7.widget.Toolbar>
+
     <GridView
-        android:layout_marginTop="120dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:id="@+id/gridview"
+        android:paddingTop="20dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/gridview"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/toolbar"
         android:columnWidth="100dp"
+        android:horizontalSpacing="20dp"
         android:numColumns="3"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="20dp"
-        android:horizontalSpacing="20dp"></GridView>
+        android:verticalSpacing="20dp"/>
 
 
-</RelativeLayout>
+
+
+</LinearLayout>

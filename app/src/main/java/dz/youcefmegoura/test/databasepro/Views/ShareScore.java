@@ -21,7 +21,7 @@ public class ShareScore extends AppCompatActivity {
         circleMenu= (CircleMenu)findViewById(R.id.circle_menu);
 
         circleMenu.setMainMenu(Color.parseColor("#CDCDCD"), R.drawable.add, R.drawable.remove)
-                .addSubMenu(Color.parseColor("#25BCFF"),R.drawable.facbook)
+                .addSubMenu(Color.parseColor("#25BCFF"),R.drawable.facebk)
                 .addSubMenu(Color.parseColor("#6d4c41"),R.drawable.twitter)
                 .addSubMenu(Color.parseColor("#ff0000"),R.drawable.instagram)
                 .addSubMenu(Color.parseColor("#1a237e"),R.drawable.whatsapp)

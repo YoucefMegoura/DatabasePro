@@ -295,6 +295,10 @@ public class SettingsActivity extends AppCompatActivity  {
         });
         dialog.show();
     }
+
+    public void Ok_Settings(View view) {
+        finish();
+    }
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 

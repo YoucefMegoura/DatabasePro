@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">Sphinx Kids</string>
-    <string name="setting">Setting</string>
-    <string name="search">Search</string>
-    <string name="dashboard">Dashboard</string>
+    <string name="setting">Paremètres</string>
+    <string name="dashboard">Menu</string>
     <string name="log_out">Quitter</string>
-    <string name="aboutus">About us</string>
+    <string name="aboutus">A propos</string>
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="debutant">Debutant</string>

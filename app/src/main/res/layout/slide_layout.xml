@@ -19,18 +19,18 @@
 
         />
 
-    <TextView
-        android:id="@+id/textSlide"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
-        android:layout_marginLeft="40dp"
-        android:text="Finis chaque niveau en gagnant des point permettant de debloquer les niveaux suivant"
-        android:textColor="@color/colorWhite"
-        android:textSize="20dp"
-        android:textAlignment="center"
-        android:textStyle="italic"/>
+        <TextView
+            android:id="@+id/textSlide"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="35dp"
+            android:fontFamily="sans-serif"
+            android:text="Finis chaque niveau en gagnant des point permettant de debloquer les niveaux suivant"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="20dp" />
 
 
 

@@ -52,6 +52,8 @@ import es.dmoral.toasty.Toasty;
 
 public class ImageGame extends AppCompatActivity implements RecognitionListener {
     private static int JETON_BEGIN = 12;
+    private static int JETON_TO_ADD = 5;
+
     /********  Shared Preferences  ************/
     private static final String USER_PREFS = "PREFS";
     private static final String PREF_JETON = "JETON_PREFS";
@@ -459,7 +461,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         next = (Button)dialog.findViewById(R.id.next_btn);
         share =(Button)dialog.findViewById(R.id.share_btn) ;
 
-        jeton_from_pref += 5;
+        jeton_from_pref += JETON_TO_ADD;
 
         sharedPreferences
                 .edit()

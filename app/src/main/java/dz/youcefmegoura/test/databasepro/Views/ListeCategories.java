@@ -1,7 +1,10 @@
 package dz.youcefmegoura.test.databasepro.Views;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v4.widget.DrawerLayout;
@@ -14,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,6 +42,8 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
     private ArrayList<Categorie> Categories_array = new ArrayList<>();
     private DatabaseManager databaseManager;
     protected static String DB_NAME;
+    public Dialog myDialog;
+    public Button yes , no;
 
     private LangueDBM langueDBM;
 
@@ -157,24 +163,56 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
         int id = item.getItemId();
         switch (id){
             case R.id.setting_id:
-                Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show();
+                myintent= new Intent(this, SettingsActivity.class);
+                startActivity(myintent);
                 break;
             case R.id.aboutus_id:
                 myintent= new Intent(this, AboutUs.class);
                 startActivity(myintent);
                 break;
             case R.id.dashboard_id:
-                myintent= new Intent(this, Dashboared.class);
-                startActivity(myintent);
+                finish();
 
                 break;
             case R.id.logout_id:
-                Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+                CustomAlertDialog();
                 break;
         }
         return super.onOptionsItemSelected(item);
 
 
+    }
+    public void CustomAlertDialog(){
+        myDialog = new Dialog(this);
+        myDialog.setContentView(R.layout.exit_dialog);
+
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        yes = (Button) myDialog.findViewById(R.id.yes_btn);
+        no = (Button) myDialog.findViewById(R.id.no_btn);
+
+
+        yes.setEnabled(true);
+        no.setEnabled(true);
+
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moveTaskToBack(true);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
+
+            }
+        });
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.cancel();
+            }
+        });
+        myDialog.show();
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -188,6 +226,14 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
         text_animals.setText(String.valueOf(Categories_array.get(0).getNom_categorie()));
         text_arts.setText(String.valueOf(Categories_array.get(1).getNom_categorie()));
         text_communication.setText(String.valueOf(Categories_array.get(2).getNom_categorie()));
+        text_sport.setText(String.valueOf(Categories_array.get(3).getNom_categorie()));
+        text_medecine.setText(String.valueOf(Categories_array.get(4).getNom_categorie()));
+        text_musique.setText(String.valueOf(Categories_array.get(5).getNom_categorie()));
+        text_transport.setText(String.valueOf(Categories_array.get(6).getNom_categorie()));
+        text_informatique.setText(String.valueOf(Categories_array.get(7).getNom_categorie()));
+        text_nourriture.setText(String.valueOf(Categories_array.get(8).getNom_categorie()));
+        text_science.setText(String.valueOf(Categories_array.get(9).getNom_categorie()));
+
 
 
 
@@ -206,17 +252,36 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
 
         switch (v.getId()){
             case R.id.animals:
-                bundle.putInt("id_categorie", Categories_array.get(0).getId_categorie());
-                Toast.makeText(ListeCategories.this, Categories_array.get(0).getNom_categorie(), Toast.LENGTH_SHORT).show();
+                put_in_bundle(0, bundle);
                 break;
             case R.id.arts:
-                bundle.putInt("id_categorie", Categories_array.get(1).getId_categorie());
-                Toast.makeText(ListeCategories.this, Categories_array.get(1).getNom_categorie(), Toast.LENGTH_SHORT).show();
+                put_in_bundle(1, bundle);
                 break;
             case R.id.communication:
-                bundle.putInt("id_categorie", Categories_array.get(2).getId_categorie());
-                Toast.makeText(ListeCategories.this, Categories_array.get(2).getNom_categorie(), Toast.LENGTH_SHORT).show();
+                put_in_bundle(2, bundle);
                 break;
+            case R.id.sport:
+                put_in_bundle(3, bundle);
+                break;
+            case R.id.medical:
+                put_in_bundle(4, bundle);
+                break;
+            case R.id.musique:
+                put_in_bundle(5, bundle);
+                break;
+            case R.id.transport:
+                put_in_bundle(6, bundle);
+                break;
+            case R.id.informatique:
+                put_in_bundle(7, bundle);
+                break;
+            case R.id.nourriture:
+                put_in_bundle(8, bundle);
+                break;
+            case R.id.science:
+                put_in_bundle(9, bundle);
+                break;
+
         }
 
         Intent intent = new Intent(ListeCategories.this, ListeNiveaux.class);
@@ -279,6 +344,14 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
 
             return myView;
         }
+
+
+    }
+
+    public void put_in_bundle(int position, Bundle bundle){
+        bundle.putInt("id_categorie", Categories_array.get(position).getId_categorie());
+        bundle.putString("nom_catecorie", Categories_array.get(position).getNom_categorie());
+        //Toast.makeText(ListeCategories.this, Categories_array.get(p).getNom_categorie(), Toast.LENGTH_SHORT).show();
     }
 
 }
