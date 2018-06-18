@@ -39,7 +39,6 @@ public class SettingsActivity extends AppCompatActivity  {
     public Button valider, annuler, changer , nochanger, validerdiff,annulerdiff;
     public EditText entrerpseudo;
     public TextView changerpseudo;
-    public String msg;
     public Switch switch_sound;
 
     RadioGroup radioGroup;
@@ -232,7 +231,7 @@ public class SettingsActivity extends AppCompatActivity  {
     }
 
     ////////////////////////////changer avatar/////////////////////////
-   public void BoyOne (View view){
+    public void BoyOne (View view){
 
     imageAvatar.setBackgroundResource(R.drawable.boyone);
 

@@ -63,19 +63,22 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
 
     /******************* XML References ******************/
     private ImageView image_view;
-    private TextView score_text_view, nom_image_textView, score_tout_categorie, jetons_user,
+    private TextView score_text_view, nom_image_textView, nom_categorie, score_tout_categorie, jetons_user,
             congart_score;
     private ImageButton speak_btn;
     private ProgressBar progress;
     private Button next_btn;
     private Dialog myDialog, dialog, exitdialog;
     Button Oui, Non, next, share, yes, no;
+    ImageView image_categorie ;
 
     /*****************************************************/
 
     /***************** To Get from Bundle ****************/
     private int id_categorie_from_bundle;
     private int id_niveau_from_bundle;
+    private  String name_categorie_from_bundle;
+    private  int image_categorie_from_bundle;
     /*****************************************************/
 
     private TextToSpeech textToSpeech;
@@ -122,10 +125,13 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         next_btn = (Button) findViewById(R.id.next_btn);
         progress = (ProgressBar) findViewById(R.id.progress);
         nom_image_textView = findViewById(R.id.nom_image_textView);
+        image_categorie = findViewById(R.id.image_categorie);
+
 
         valid_wav = MediaPlayer.create(this, R.raw.wrong);
         wrog_wav = MediaPlayer.create(this, R.raw.valid);
         congratulation_wav = MediaPlayer.create(this, R.raw.congratulation);
+        nom_categorie = (TextView)findViewById(R.id.name_categorie_from_bundle);
 
         /************************************************/
 
@@ -135,7 +141,12 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         Bundle bundle = getIntent().getExtras();
         id_categorie_from_bundle = bundle.getInt("id_categorie");
         id_niveau_from_bundle = bundle.getInt("id_niveau");
+        name_categorie_from_bundle = bundle.getString("nom_categorie");
+        image_categorie_from_bundle = bundle.getInt("image_categorie");
         /**************************************************/
+        nom_categorie.setText(name_categorie_from_bundle);
+
+        image_categorie.setImageResource(image_categorie_from_bundle);
 
 
         /**************** Initialisation ******************/
@@ -416,7 +427,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         recognizer.addGrammarSearch(WORD_SEARCH, digitsGrammar);
     }
 
-    ////////////////////////////////////////////////////
+
     public float getScoreStars(int getBestScore){
         if (getBestScore <= 0 && getBestScore > -500)
             return 10f;
@@ -441,7 +452,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         else
             return 0f;
     }
-    ///////////////////////////////////////////////////
+
 
     public Boolean if_word_correct(String mot_a_prononce, Hypothesis hypothesis){
         if (hypothesis.getHypstr().equals(mot_a_prononce))
@@ -449,7 +460,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         else
             return false;
     }
-    /////////////////////////////////////////////////////
+
 
     //Custum Alert Dialog
     public void congratulationAlertDialog(){
@@ -491,7 +502,6 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         });
         dialog.show();
     }
-    //////////////////////////////exitimage game//////////////////////////////////////////
     public void Exit_image_game_alert(){
         exitdialog = new Dialog(this);
         exitdialog.setContentView(R.layout.quitter_image_game_dialog);
@@ -523,8 +533,6 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         });
         exitdialog.show();
     }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void textToSpeechAlertDialog(){
         myDialog = new Dialog(this);
         myDialog.setContentView(R.layout.speak_it_dialog);

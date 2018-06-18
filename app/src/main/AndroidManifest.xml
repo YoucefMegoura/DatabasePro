@@ -19,6 +19,7 @@
             android:name=".Views.MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:screenOrientation="portrait"/>
+
         <activity android:name=".Views.ListeCategories"
             android:screenOrientation="portrait"/>
         <activity android:name=".Views.Menu.AboutUs"
@@ -57,6 +58,10 @@
             android:name=".Views.SettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity
+            android:name=".Views.ShareScore"/>
+            <!--android:theme="@style/Theme.AppCompat.NoActionBar"-->
+            android:screenOrientation="portrait"/>
         <activity android:name=".Views.Statistiques"
             android:screenOrientation="portrait"></activity>
     </application>

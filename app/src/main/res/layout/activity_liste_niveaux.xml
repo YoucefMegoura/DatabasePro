@@ -6,8 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="dz.youcefmegoura.test.databasepro.Views.ListeNiveaux"
-    android:background="#e5f2f2f2"
+    android:background="@drawable/background"
     >
+    <!--android:background="#e5f2f2f2"-->
+
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"

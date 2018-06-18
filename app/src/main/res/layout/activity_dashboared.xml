@@ -44,9 +44,10 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="40dp"
             android:background="@drawable/button_login"
-            android:text="Multijoueurs 1 à 1"
+            android:text="Multijoueurs   (BETA)"
             android:textSize="18dp"
-            android:textColor="#4dc0f7"/>
+            android:textColor="#4dc0f7"
+            />
 
         <Button
             android:layout_marginTop="10dp"

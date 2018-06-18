@@ -29,7 +29,7 @@ public class SlideAdapter extends PagerAdapter{
     public int[] slide_image = {
             R.drawable.title,
             R.drawable.categorie_for_slide,
-            R.drawable.score,
+            R.drawable.crown,
             R.drawable.jeton
 
     };

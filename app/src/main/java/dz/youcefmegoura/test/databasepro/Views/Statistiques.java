@@ -1,16 +1,24 @@
 package dz.youcefmegoura.test.databasepro.Views;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,14 +28,21 @@ import dz.youcefmegoura.test.databasepro.Database.DatabaseManager;
 import dz.youcefmegoura.test.databasepro.Objects.Categorie;
 import dz.youcefmegoura.test.databasepro.Objects.Langue;
 import dz.youcefmegoura.test.databasepro.R;
+import dz.youcefmegoura.test.databasepro.Views.Menu.AboutUs;
 
 public class Statistiques extends AppCompatActivity {
 
-    private ArrayList<Categorie> Categories_array = new ArrayList<>();
-    private DatabaseManager databaseManager;
+    private ArrayList<Categorie> Categories_array_EN = new ArrayList<>();
+    private ArrayList<Categorie> Categories_array_FR = new ArrayList<>();
+    private ArrayList<Categorie> Categories_array_GR = new ArrayList<>();
+
+    private DatabaseManager databaseManagerEn, databaseManagerFr, databaseManagerGr;
     protected static String DB_NAME;
-    private int id_categorie_from_bundle;
     /////////////////////////////////////////////
+
+    public Dialog myDialog;
+    Button yes, no;
+    Toolbar toolbar;
 
     private ExpandableListAdapter ExpAdapter;
     private ArrayList<Langue> ExpListlangue;
@@ -38,17 +53,25 @@ public class Statistiques extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistiques);
 
-        /*****************Get from Bundle****************/
-      //  Bundle bundle = getIntent().getExtras();
-        // id_categorie_from_bundle = bundle.getInt("id_categorie");
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-       // databaseManager = new DatabaseManager(this, Statistiques.DB_NAME);
+
+        databaseManagerEn = new DatabaseManager(this, "english.db");
+        databaseManagerFr = new DatabaseManager(this, "french.db");
+        databaseManagerGr = new DatabaseManager(this, "german.db");
+        Categories_array_EN = new ArrayList<Categorie>(databaseManagerEn.readFrom_CategorieTable()) ;
+        Categories_array_FR = new ArrayList<Categorie>(databaseManagerFr.readFrom_CategorieTable()) ;
+        Categories_array_GR = new ArrayList<Categorie>(databaseManagerGr.readFrom_CategorieTable()) ;
+
+
+
+
 
     }
     @Override
     protected void onResume() {
         super.onResume();
-       //Categories_array = new ArrayList<Categorie>(databaseManager.readFrom_CategorieTable()) ;
         ExpandList = (ExpandableListView) findViewById(R.id.list_viewStat);
         ExpListlangue = SetStandardGroups();
         ExpAdapter = new ExpandableListAdapter(Statistiques.this, ExpListlangue);
@@ -58,11 +81,11 @@ public class Statistiques extends AppCompatActivity {
     }
 
     public ArrayList<Langue> SetStandardGroups() {
+        ArrayList<Integer> score_english = new ArrayList<>();
 
         int langue_images[] = {R.drawable.english, R.drawable.french, R.drawable.german, R.drawable.portugais, R.drawable.italian
                 , R.drawable.spanish};
-        String categories_names[] = {"Animals", "Arts", "Communication", "Sport", "medecine", "Musique", "Transport"
-                , "Informatique", "Nourriture", "Science"};
+
 
         int Images[] = {R.mipmap.animals, R.mipmap.arts, R.mipmap.communication,
                 R.mipmap.sport, R.mipmap.medecine, R.mipmap.music,
@@ -72,16 +95,19 @@ public class Statistiques extends AppCompatActivity {
         ArrayList<Categorie> ch_list;
 
         for (Integer langue_image : langue_images) {
+
             Langue gru = new Langue();
             gru.setImage_langue(langue_image);
 
             ch_list = new ArrayList<Categorie>();
-            for (int j =0 ; j < categories_names.length; j++) {
+            for (int j =0 ; j < Categories_array_EN.size(); j++) {
+                score_english.add(Categories_array_EN.get(j).getScore_categorie());
+
                 Categorie ch = new Categorie();
-                ch.setNom_categorie(categories_names[j]);
+                ch.setNom_categorie(Categories_array_EN.get(j).getNom_categorie());
                 ch.setImage(Images[j]);
-                //TODO : hnaya lazém tjibou men la BD set
-                // ch.setScore_categorie(ch_list.get(j).getScore_categorie());
+
+                ch.setScore_categorie(Categories_array_EN.get(j).getScore_categorie());
                 ch_list.add(ch);
             }
             gru.setItems(ch_list);
@@ -90,6 +116,9 @@ public class Statistiques extends AppCompatActivity {
         }
 
         return list;
+    }
+
+    public void back_click(View view) {finish();
     }
 
     public class ExpandableListAdapter extends BaseExpandableListAdapter {
@@ -131,7 +160,7 @@ public class Statistiques extends AppCompatActivity {
 
             categorie_name.setText(categorie.getNom_categorie().toString());
             categorie_image.setImageResource(categorie.getImage());
-//            categorie_score.setText(categorie.getScore_categorie());
+            categorie_score.setText(String.valueOf(categorie.getScore_categorie()));
 
             return convertView;
         }
@@ -188,5 +217,77 @@ public class Statistiques extends AppCompatActivity {
 
 
     }
+    //creation Menu toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar,menu);
+        return true;
+
+    }
+    //select item menu toolbar
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent myintent;
+        int id = item.getItemId();
+        switch (id){
+            case R.id.setting_id:
+                myintent= new Intent(this, SettingsActivity.class);
+                startActivity(myintent);
+                break;
+            case R.id.aboutus_id:
+                myintent= new Intent(this, AboutUs.class);
+                startActivity(myintent);
+                break;
+            case R.id.dashboard_id:
+                myintent= new Intent(this, Dashboared.class);
+                startActivity(myintent);
+
+                break;
+            case R.id.logout_id:
+                CustomAlertDialog();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+
+
+
+    }
+    ////////////////////exit menu toolbar///////////////////////
+    public void CustomAlertDialog(){
+        myDialog = new Dialog(this);
+        myDialog.setContentView(R.layout.exit_dialog);
+
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        yes = (Button) myDialog.findViewById(R.id.yes_btn);
+        no = (Button) myDialog.findViewById(R.id.no_btn);
+
+
+        yes.setEnabled(true);
+        no.setEnabled(true);
+
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moveTaskToBack(true);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
+
+            }
+        });
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.cancel();
+            }
+        });
+        myDialog.show();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
 
 }

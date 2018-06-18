@@ -5,11 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="dz.youcefmegoura.test.databasepro.Views.Statistiques">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary"
+        app:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        android:elevation="10dp"
+        app:title="Stat"
+        >
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="9000dp"
+            android:layout_alignStart="@+id/gridview"
+            android:background="@mipmap/back_gris"
+            android:onClick="back_click" />
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="000dp"
+            android:layout_alignStart="@+id/gridview"
+            android:background="@mipmap/back_gris"
+            android:onClick="back_click" />
 
+
+    </android.support.v7.widget.Toolbar>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:background="#e0f79e04">
+        android:background="@drawable/button_sinscrire_jaiuncompte">
 
     <ImageView
         android:layout_width="180dp"

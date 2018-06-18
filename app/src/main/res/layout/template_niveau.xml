@@ -39,12 +39,12 @@
 
     <ImageView
         android:id="@+id/Locked_IV"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:visibility="gone"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:visibility="gone"
-        android:background="#22000000"
-        app:srcCompat="@drawable/ic_lock_outline_black_24dp" />
+        android:background="@drawable/backgroundlock"
+        android:src="@drawable/ic_lock_outline_black_24dp" />
 
 </RelativeLayout>

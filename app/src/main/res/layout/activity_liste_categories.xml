@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="dz.youcefmegoura.test.databasepro.Views.ListeCategories"
-    android:background="#e5f2f2f2"
+    android:background="@drawable/background"
     >
 
     <android.support.v4.widget.DrawerLayout
@@ -78,7 +78,7 @@
                     android:layout_marginLeft="55dp"
                     android:layout_marginTop="30dp"
                     android:clickable="true"
-                    android:src="@mipmap/arts"
+                    android:src="@mipmap/gastronomy"
                     />
 
                 <android.support.v4.widget.ContentLoadingProgressBar
@@ -96,8 +96,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/arts"
-                    android:layout_marginLeft="92dp"
-                    android:text="Arts"
+                    android:layout_marginLeft="65dp"
+                    android:text="Gastronomy"
                     android:textStyle="bold"
                     android:textColor="#403c3c"
                     android:textSize="15dp" />
@@ -112,7 +112,7 @@
                     android:layout_marginLeft="205dp"
                     android:layout_marginTop="30dp"
                     android:clickable="true"
-                    android:src="@mipmap/communication"
+                    android:src="@mipmap/informatique"
                     />
 
                 <android.support.v4.widget.ContentLoadingProgressBar
@@ -129,9 +129,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/communication"
-                    android:layout_marginLeft="200dp"
+                    android:layout_marginLeft="240dp"
 
-                    android:text="Communication"
+                    android:text="Ecole"
                     android:textColor="#403c3c"
                     android:textSize="15dp"
                     android:textStyle="bold" />
@@ -146,7 +146,7 @@
                     android:layout_marginLeft="55dp"
                     android:layout_marginTop="45dp"
                     android:clickable="true"
-                    android:src="@mipmap/sport"
+                    android:src="@mipmap/communication"
                     />
                 <android.support.v4.widget.ContentLoadingProgressBar
                     android:id="@+id/progressBar4"
@@ -164,7 +164,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/sport"
                     android:layout_marginLeft="90dp"
-                    android:text="Sport"
+                    android:text="Pays"
                     android:textStyle="bold"
                     android:textColor="#403c3c"
                     android:textSize="15dp" />
@@ -179,7 +179,7 @@
                     android:layout_marginLeft="205dp"
                     android:layout_marginTop="45dp"
                     android:clickable="true"
-                    android:src="@mipmap/medecine"
+                    android:src="@mipmap/music"
                     />
                 <android.support.v4.widget.ContentLoadingProgressBar
                     android:id="@+id/progressBar5"
@@ -196,8 +196,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/medical"
-                    android:layout_marginLeft="220dp"
-                    android:text="Medecine"
+                    android:layout_marginLeft="230dp"
+                    android:text="Maison"
                     android:textColor="#403c3c"
                     android:textSize="15dp"
                     android:textStyle="bold" />
@@ -212,7 +212,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="315dp"
                     android:clickable="true"
-                    android:src="@mipmap/music"
+                    android:src="@mipmap/arts"
                     />
                 <android.support.v4.widget.ContentLoadingProgressBar
                     android:id="@+id/progressBar6"
@@ -230,7 +230,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/musique"
                     android:layout_centerHorizontal="true"
-                    android:text="Musique"
+                    android:text="Paysage"
                     android:textColor="#403c3c"
                     android:textSize="15dp"
                     android:textStyle="bold"/>
@@ -245,7 +245,7 @@
                     android:layout_marginLeft="55dp"
                     android:layout_marginTop="30dp"
                     android:clickable="true"
-                    android:src="@mipmap/transport"
+                    android:src="@mipmap/communication"
                     />
                 <android.support.v4.widget.ContentLoadingProgressBar
                     android:id="@+id/progressBar7"
@@ -261,12 +261,12 @@
                     android:id="@+id/text_transport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/text_sport"
                     android:layout_below="@+id/transport"
-                    android:layout_marginLeft="75dp"
-                    android:text="Transport"
-                    android:textStyle="bold"
+                    android:text="Social"
                     android:textColor="#403c3c"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
 
                 <at.markushi.ui.CircleButton
                     android:id="@+id/informatique"
@@ -278,7 +278,7 @@
                     android:layout_marginLeft="205dp"
                     android:layout_marginTop="30dp"
                     android:clickable="true"
-                    android:src="@mipmap/informatique"
+                    android:src="@mipmap/sport"
                     />
 
                 <android.support.v4.widget.ContentLoadingProgressBar
@@ -295,9 +295,9 @@
                     android:id="@+id/text_informatique"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/text_communication"
                     android:layout_below="@+id/informatique"
-                    android:layout_marginLeft="210dp"
-                    android:text="Informatique"
+                    android:text="Sport"
                     android:textColor="#403c3c"
                     android:textSize="15dp"
                     android:textStyle="bold" />
@@ -312,6 +312,7 @@
                     android:layout_marginLeft="55dp"
                     android:layout_marginTop="45dp"
                     android:clickable="true"
+                    android:src="@mipmap/transport"
 
                     />
                 <android.support.v4.widget.ContentLoadingProgressBar
@@ -329,7 +330,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/nourriture"
                     android:layout_marginLeft="75dp"
-                    android:text="Nourriture"
+                    android:text="Voyage"
                     android:textStyle="bold"
                     android:textColor="#403c3c"
                     android:textSize="15dp"
@@ -345,7 +346,7 @@
                     android:layout_marginLeft="205dp"
                     android:layout_marginTop="45dp"
                     android:clickable="true"
-                    android:src="@mipmap/science"
+                    android:src="@mipmap/medecine"
 
                     />
                 <android.support.v4.widget.ContentLoadingProgressBar
@@ -364,7 +365,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/science"
                     android:layout_marginLeft="230dp"
-                    android:text="Science"
+                    android:text="Medecine"
                     android:textColor="#403c3c"
                     android:textSize="15dp"
                     android:textStyle="bold"
@@ -397,67 +398,67 @@
                 android:layout_height="200dp"
                 android:orientation="vertical"
                 android:background="@drawable/bg_inscr">
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-               android:src="@drawable/profile"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="20dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mimou "
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/colorWhite"
-                android:textStyle="bold"
-
-                />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/profile"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="20dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mimou "
                     android:layout_marginTop="10dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/score"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1800"
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/colorWhite"
-                    android:textStyle="bold"
-                    android:layout_marginTop="5dp"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="28dp"
-                    android:src="@drawable/jeton"
                     android:layout_marginLeft="10dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5"
-                    android:paddingLeft="10dp"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold"
-                    android:layout_marginTop="5dp"
-                    />
 
-            </LinearLayout>
+                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/crown"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1800"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
+                        android:layout_marginTop="5dp"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/jeton"
+                        android:layout_marginLeft="10dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
+                        android:layout_marginTop="5dp"
+                        />
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -466,22 +467,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:choiceMode="singleChoice"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
+                android:dividerHeight="8dp"
+
                 />
 
             <Button
-            android:id="@+id/ajouter_une_langue_btn"
-            android:layout_marginTop="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="#ffffff"
-            android:text="Ajouter langue"
-            android:textSize="12dp"
-            android:textColor="#cdcdcdcd"
-            android:drawableStart="@mipmap/add_langue"
-            android:onClick="ajouter_une_langue_btn"
+                android:id="@+id/ajouter_une_langue_btn"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="#ffffff"
+                android:text="Ajouter langue"
+                android:onClick="ajouter_une_langue_btn"
+                android:textSize="12dp"
+                android:textColor="#cdcdcdcd"
+                android:drawableStart="@mipmap/add_langue"
 
-            />
+                />
 
         </LinearLayout>
 

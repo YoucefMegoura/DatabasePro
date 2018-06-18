@@ -171,7 +171,8 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
                 startActivity(myintent);
                 break;
             case R.id.dashboard_id:
-                finish();
+                myintent= new Intent(this, Dashboared.class);
+                startActivity(myintent);
 
                 break;
             case R.id.logout_id:
@@ -181,7 +182,9 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
         return super.onOptionsItemSelected(item);
 
 
+
     }
+    ////////////////////exit menu toolbar///////////////////////
     public void CustomAlertDialog(){
         myDialog = new Dialog(this);
         myDialog.setContentView(R.layout.exit_dialog);
@@ -244,6 +247,13 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
         ls.setAdapter(cus);
 
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        images_list_langue.clear();
+    }
+
     @Override
     public void onClick(View v) {
 
@@ -349,8 +359,15 @@ public class ListeCategories extends AppCompatActivity implements View.OnClickLi
     }
 
     public void put_in_bundle(int position, Bundle bundle){
+        int Images[] = {R.mipmap.animals, R.mipmap.arts, R.mipmap.communication,
+                R.mipmap.sport, R.mipmap.medecine, R.mipmap.music,
+                R.mipmap.transport, R.mipmap.informatique, R.mipmap.animals, R.mipmap.science};
+
+
         bundle.putInt("id_categorie", Categories_array.get(position).getId_categorie());
-        bundle.putString("nom_catecorie", Categories_array.get(position).getNom_categorie());
+        bundle.putString("nom_categorie", Categories_array.get(position).getNom_categorie());
+        bundle.putInt("image_categorie", Images[position]);
+
         //Toast.makeText(ListeCategories.this, Categories_array.get(p).getNom_categorie(), Toast.LENGTH_SHORT).show();
     }
 

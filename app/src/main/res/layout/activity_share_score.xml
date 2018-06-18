@@ -13,6 +13,7 @@
         android:background="@color/colorPrimary"
         app:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         android:elevation="10dp"
+        app:title="Partager le score"
         >
     </android.support.v7.widget.Toolbar>
 
