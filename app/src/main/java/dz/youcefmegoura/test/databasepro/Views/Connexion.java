@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,17 +12,28 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.androidnetworking.common.Method;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import dz.youcefmegoura.test.databasepro.R;
+import dz.youcefmegoura.test.databasepro.Database.HelperMySQL;
+import es.dmoral.toasty.Toasty;
 
 public class Connexion extends AppCompatActivity {
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
+    private static final String USER_PREFS = "PREFS";
+    private static final String PREF_PSEUDO = "PREFS_PSEUDO";
+    private static final String PREF_PASSWORD = "PREF_PASSWORD";
+    SharedPreferences sharedPreferences;
+
 
     /************** XML References ***************/
     private EditText email_ET, mot_de_passe_ET;
@@ -49,7 +59,15 @@ public class Connexion extends AppCompatActivity {
         auth_firebase = FirebaseAuth.getInstance();
         /**************************************************/
 
-        sharedPreferences = getSharedPreferences("int", MODE_PRIVATE);
+        sharedPreferences = getBaseContext().getSharedPreferences(USER_PREFS, MODE_PRIVATE);
+        if (sharedPreferences.contains(PREF_PSEUDO) && sharedPreferences.contains(PREF_PASSWORD)) {
+
+            String pseudo_user_db = sharedPreferences.getString(PREF_PSEUDO, null);
+            String password_user_db = sharedPreferences.getString(PREF_PASSWORD, null);
+
+            email_ET.setText(pseudo_user_db);
+            mot_de_passe_ET.setText(password_user_db);
+        }
     }
 
     @Override
@@ -77,21 +95,7 @@ public class Connexion extends AppCompatActivity {
         }
 
         if (isNetworkAvailable()){
-            auth_firebase.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                        Intent myintent= new Intent(Connexion.this,Dashboared.class);
-                        startActivity(myintent);
-                        Log.d("Firebase", "signInWithEmail:success");
-                    }else{
-                        Log.w("Firebase", "signInWithEmail:failure", task.getException());
-                        Toast.makeText(Connexion.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }else{
-            Toast.makeText(this, "Impossible de se connecter, verifiez votre internet", Toast.LENGTH_SHORT).show();
+            login_user(email, password);
         }
 
     }
@@ -120,5 +124,78 @@ public class Connexion extends AppCompatActivity {
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return (activeNetworkInfo != null && activeNetworkInfo.isConnected());
+    }
+
+    public void login_user(String pseudo, String password){
+        String password_hashed = sha1(password);
+
+        String url_create_user = HelperMySQL.ADRESS_SERVER + "login_user.php?pseudo=" + pseudo + "&password=" + password_hashed;
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        StringRequest getRequest = new StringRequest(Method.GET, url_create_user,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+                            String code = jsonObject.getString("code");
+
+                            if (code.equals("OK")){
+                                //si aucun utilisateur n'est sauvegardé, on ajouter
+                                sharedPreferences
+                                        .edit()
+                                        .putString(PREF_PSEUDO, email_ET.getText().toString())
+                                        .putString(PREF_PASSWORD, mot_de_passe_ET.getText().toString())
+                                        .apply();
+                                /////////////////////////////////////////////////
+                                startActivity(new Intent(Connexion.this, Salon.class));
+                                Toasty.success(Connexion.this, "Connexion réussi", Toast.LENGTH_SHORT).show();
+
+                            }else{
+                                Toasty.error(Connexion.this, "Pseudo/ Login invalide !", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.i("Error.Response", "zfef");
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("Error.Response", "zfef");
+                    }
+                }
+        );
+
+        queue.add(getRequest);
+
+
+    }
+
+    public static String getHash(String txt, String hashType) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance(hashType);
+            byte[] array = md.digest(txt.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
+            }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+            // error action
+        }
+        return null;
+    }
+
+    public static String md5(String txt) {
+        return getHash(txt, "MD5");
+    }
+
+    public static String sha1(String txt) {
+        return getHash(txt, "SHA1");
     }
 }

@@ -1,0 +1,8 @@
+#JSGF V1.0;
+
+grammar english;
+
+
+<etude> = abacus | agenda | alarm clock | anatomy | astronaut | backpack | balancer | bell | blackboard | books | bookshelf | brainstorm | briefcase | calculator | chemistry | column | compass | computer mouse | computer | desk | diploma | earth globe | email | eraser | flask | fountain pen | gears | glasses | idea | library | light bulb | medal | microscope | molecule | mortarboard | newtons cradle | notebook | open book | paint brush | paint palette | palette | paperclip | pen | pencil | physics | playlist | professor | scholarship | school bag | school bell | school bus | school material | school | scissors | set square | sports | student | teacher | telescope | test tubes | test | university | violin | whistle;
+
+public <english> =  <etude> ;

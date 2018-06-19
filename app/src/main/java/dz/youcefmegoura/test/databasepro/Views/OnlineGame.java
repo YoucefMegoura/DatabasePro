@@ -3,39 +3,49 @@ package dz.youcefmegoura.test.databasepro.Views;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
-import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hitomi.cmlibrary.CircleMenu;
-import com.hitomi.cmlibrary.OnMenuSelectedListener;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import dz.youcefmegoura.test.databasepro.Database.DatabaseManager;
-import dz.youcefmegoura.test.databasepro.Database.SharedPref;
 import dz.youcefmegoura.test.databasepro.Objects.Image;
 import dz.youcefmegoura.test.databasepro.R;
 import edu.cmu.pocketsphinx.Assets;
@@ -45,23 +55,24 @@ import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 import es.dmoral.toasty.Toasty;
 
+import static dz.youcefmegoura.test.databasepro.Database.HelperMySQL.ADRESS_SERVER;
 
-/**
- * Created by Youcef Mégoura and Moussaoui Mekka on 21/04/2018.
- */
+public class OnlineGame extends AppCompatActivity implements RecognitionListener {
+    int mon_score = 0;
 
-public class ImageGame extends AppCompatActivity implements RecognitionListener {
-    private static int JETON_BEGIN = 50;
-    private static int JETON_TO_ADD = 5;
+    private final static int TIME_TO_END_GAME = 25000;//15 second
+    int id_game;
+    EditText text ;
+    String type_user;
+    Handler handler;
+    int score_sender, score_receiver;
 
-    /********  Shared Preferences  ************/
-    private static final String USER_PREFS = "PREFS";
-    private static final String PREF_JETON = "JETON_PREFS";
-    private int jeton_from_pref ;
-    private SharedPreferences sharedPreferences;
-    /********************************************/
+    Dialog winDialog , loseDalog;
+    Button winIgnorer , loseIgnorer;
 
-    /******************* XML References ******************/
+
+
+    Locale loc;
     private ImageView image_view;
     private TextView score_text_view, nom_image_textView, nom_categorie, score_tout_categorie, jetons_user,
             congart_score;
@@ -71,15 +82,6 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
     private Dialog myDialog, dialog, exitdialog;
     Button Oui, Non, next, share, yes, no;
     ImageView image_categorie ;
-
-    /*****************************************************/
-
-    /***************** To Get from Bundle ****************/
-    private int id_categorie_from_bundle;
-    private int id_niveau_from_bundle;
-    private  String name_categorie_from_bundle;
-    private  int image_categorie_from_bundle;
-    /*****************************************************/
 
     private TextToSpeech textToSpeech;
 
@@ -94,35 +96,28 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
     private MediaPlayer valid_wav, wrog_wav, congratulation_wav;
     /************************************************/
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_game);
+        setContentView(R.layout.activity_online_game);
 
-        /***************** Get from Bundle ****************/
+        choix_language("english.db");
+
+        handler = new Handler();
+
+        //text = (EditText) findViewById(R.id.editText);
+
         Bundle bundle = getIntent().getExtras();
-        id_categorie_from_bundle = bundle.getInt("id_categorie");
-        id_niveau_from_bundle = bundle.getInt("id_niveau");
-        name_categorie_from_bundle = bundle.getString("nom_categorie");
-        image_categorie_from_bundle = bundle.getInt("image_categorie");
-        /**************************************************/
+        id_game = bundle.getInt("id_game");
+        type_user = bundle.getString("type_user");
+
+        end_game();
 
 
-        /*********** Initialisation Shared preferences ***********/
-        sharedPreferences = getBaseContext().getSharedPreferences(USER_PREFS, MODE_PRIVATE);
-        if (sharedPreferences.contains(PREF_JETON)) {
-            jeton_from_pref = sharedPreferences.getInt(PREF_JETON, 0);
-        }else{
-            sharedPreferences
-                    .edit()
-                    .putInt(PREF_JETON, JETON_BEGIN )
-                    .apply();
-        }
-        /******************************************************/
+        ////////////////////////pocket
 
-
-        choix_language(ListeCategories.DB_NAME);
-        /*************** XML References ******************/
         score_text_view = (TextView) findViewById(R.id.score_text_view);
         congart_score= (TextView)findViewById(R.id.congarat_score);
         image_view = (ImageView) findViewById(R.id.image_view);
@@ -135,32 +130,22 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         nom_image_textView = findViewById(R.id.nom_image_textView);
         image_categorie = findViewById(R.id.image_categorie);
 
-
         valid_wav = MediaPlayer.create(this, R.raw.wrong);
         wrog_wav = MediaPlayer.create(this, R.raw.valid);
         congratulation_wav = MediaPlayer.create(this, R.raw.congratulation);
         nom_categorie = (TextView)findViewById(R.id.name_categorie_from_bundle);
 
-        /************************************************/
-
-
-
-
-        nom_categorie.setText(name_categorie_from_bundle);
-
-        image_categorie.setImageResource(image_categorie_from_bundle);
-
+        nom_categorie.setText("Online");
 
         /**************** Initialisation ******************/
         indice = 0;
-        databaseManager = new DatabaseManager(this, ListeCategories.DB_NAME);
-        Images_array = new ArrayList<>(databaseManager.readFrom_ImageTable_where_categorie_and_niveau(id_categorie_from_bundle, id_niveau_from_bundle));
+        databaseManager = new DatabaseManager(this, "english.db");
+        Images_array = new ArrayList<>(databaseManager.readFrom_ImageTable_where_categorie_and_niveau(7, 63));
         cursseur_id_array_image = Images_array.get(indice).getId_image();
 
         afficher_imageObject(indice);//Afficher la premiere image dans onCreate
         progress.setProgress(0);
         /*************************************************/
-
 
         /************* Initialisation Text to Speech ************/
         textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
@@ -170,14 +155,13 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
                     int result = textToSpeech.setLanguage(loc);
                     if (result == TextToSpeech.LANG_MISSING_DATA ||
                             result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Toast.makeText(ImageGame.this, "This Language is not supported", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OnlineGame.this, "This Language is not supported", Toast.LENGTH_SHORT).show();
                     }
                 } else
                     Log.e("Text to Speech", "Initilization Failed !");
             }
         });
         /*******************************************************/
-
 
         /********************* Pocketsphinx **********************/
         int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);
@@ -189,53 +173,22 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         new SetupTask(this).execute();
         /*********************************************************/
 
-        score_tout_categorie.setText(String.valueOf(databaseManager.somme_score_categorie()));
-        jetons_user.setText( String.valueOf(jeton_from_pref));
-        speak_btn.setEnabled(false);
+
+
     }
 
-    //Simple methode pour afficher tout les attributs d'une image dans XML ...
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mon_score = 0;
+    }
+
     public void afficher_imageObject(int cursseur_id_array_image) {
         score_text_view.setText( String.valueOf(Images_array.get(indice).getScore_image())+"/10");
         int drawableResourceId = this.getResources().getIdentifier(Images_array.get(indice).getUrl_image(), "drawable", this.getPackageName());
         image_view.setImageResource(drawableResourceId);
         nom_image_textView.setText(Images_array.get(indice).getNom_image());
     }
-
-    //onClick Button
-    public void startClick(View view) {
-        recognizer.stop();
-        speak_btn.setBackgroundResource(R.drawable.mic_blue_round);
-        speak_btn.setEnabled(false);
-        recognizer.startListening(WORD_SEARCH, 5000);
-    }
-
-    //onClick Button
-    public void nextClick(View view) {
-        if (indice == Images_array.size() - 1) {
-            next_btn.setVisibility(View.GONE);
-
-            congratulation_wav.start();
-            congratulationAlertDialog();
-
-
-        }else
-            indice++;
-        cursseur_id_array_image = Images_array.get(indice).getId_image();
-        afficher_imageObject(cursseur_id_array_image);
-
-        next_btn.setVisibility(View.GONE);
-    }
-
-    //onClick Button
-    /*public void backClick(View view) {
-        if (indice == 0)
-            indice = Images_array.size() - 1;
-        else
-            indice--;
-        cursseur_id_array_image = Images_array.get(indice).getId_image();
-        afficher_imageObject(cursseur_id_array_image);
-    }*/
 
     /*
     *
@@ -250,47 +203,12 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
     private String dictionnaire_sphinx;
     private String ptm_sphinx ;
     private String WORD_SEARCH ;
-    private Locale loc;
+
 
     public void choix_language(String DB_NAME){
         switch (DB_NAME){
             case "english.db" :
-                switch (name_categorie_from_bundle){
-                    case "Animeaux":
-                        grammar_sphinx = "en-en-animeaux.gram";
-                        break;
-                    case "Gastronomie":
-                        grammar_sphinx = "en-en-gastronomie.gram";
-                        break;
-                    case "Ecole":
-                        grammar_sphinx = "en-en-ecole.gram";
-                        break;
-                    case "Pays":
-                        grammar_sphinx = "en-en-pays.gram";
-                        break;
-                    case "Maison":
-                        grammar_sphinx = "en-en-maison.gram";
-                        break;
-                    case "Paysage":
-                        grammar_sphinx = "en-en-paysage.gram";
-                        break;
-                    case "Social":
-                        grammar_sphinx = "en-en-social.gram";
-                        break;
-                    case "Sport":
-                        grammar_sphinx = "en-en-sport.gram";
-                        break;
-                    case "Voyage":
-                        grammar_sphinx = "en-en-voyage.gram";
-                        break;
-                    case "Medecine":
-                        grammar_sphinx = "en-en-medecine.gram";
-                        break;
-                    default:
-                        grammar_sphinx = "en-en-first.gram";
-                        break;
-                }
-
+                grammar_sphinx = "en-en-first.gram";
                 dictionnaire_sphinx = "cmudict-en-us.dict";
                 ptm_sphinx = "en-us-ptm";
                 WORD_SEARCH = "world";
@@ -357,21 +275,10 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
                 Toasty.error(this,"Ta prononciation est incorrecte",Toast.LENGTH_SHORT).show();
                 final_score = 0;
             }
-            databaseManager.changer_score_image(cursseur_id_array_image, (int)(final_score));
+            mon_score =+ (int)(final_score);
             score_text_view.setText( String.valueOf((int)(final_score))+"/10");
 
-            /************** Pour changer le score du niveau et de la categorie dans la base de donnée ************/
-            //Niveau
-            int somme_score_images = databaseManager.somme_score_images_dans_niveau(id_categorie_from_bundle, id_niveau_from_bundle);
-            databaseManager.changer_score_niveau(id_niveau_from_bundle, somme_score_images);
 
-            //Categorie
-            int somme_score_niveau = databaseManager.somme_score_niveaux_dans_categorie(id_categorie_from_bundle);
-            databaseManager.changer_score_categorie(id_categorie_from_bundle, somme_score_niveau);
-
-            //Somme des categories dans l'activité image_activity
-            score_tout_categorie.setText( String.valueOf(databaseManager.somme_score_categorie()));
-            /*****************************************************************************************************/
 
             next_btn.setVisibility(View.VISIBLE);
             progress.setProgress((indice + 1) * 100 / Images_array.size());
@@ -401,14 +308,14 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
     }
 
     public void SpeakIt_Click(View view) {
-        textToSpeechAlertDialog();
+
     }
 
 
     private class SetupTask extends AsyncTask<Void, Void, Exception> {
-        WeakReference<ImageGame> activityReference;
-        SetupTask(ImageGame activity) {
-            this.activityReference = new WeakReference<>(activity);
+        WeakReference<OnlineGame> activityReference;
+        SetupTask(OnlineGame activity) {
+            activityReference = new WeakReference<>(activity);
             ////////////////////
             next_btn.setVisibility(View.GONE);
         }
@@ -509,13 +416,6 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         next = (Button)dialog.findViewById(R.id.next_btn);
         share =(Button)dialog.findViewById(R.id.share_btn) ;
 
-        jeton_from_pref += JETON_TO_ADD;
-
-        sharedPreferences
-                .edit()
-                .putInt(PREF_JETON, jeton_from_pref)
-                .apply();
-
 
 
         next.setEnabled(true);
@@ -533,7 +433,7 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(ImageGame.this, ShareScore.class));
+                startActivity(new Intent(OnlineGame.this, ShareScore.class));
 
             }
         });
@@ -570,54 +470,207 @@ public class ImageGame extends AppCompatActivity implements RecognitionListener 
         });
         exitdialog.show();
     }
-    public void textToSpeechAlertDialog(){
-        myDialog = new Dialog(this);
-        myDialog.setContentView(R.layout.speak_it_dialog);
 
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Oui = (Button)myDialog.findViewById(R.id.oui_btn);
-        Non = (Button)myDialog.findViewById(R.id.non_btn);
 
-        Oui.setEnabled(true);
-        Non.setEnabled(true);
+    ////////////////////////////////////////////////////////////
 
-        Oui.setOnClickListener(new View.OnClickListener() {
+
+
+
+    //onClick
+    public void btnClick(View view) {
+
+    }
+
+
+    public void end_game(){
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setScore(type_user);
+                show_result();
+            }
+        }, TIME_TO_END_GAME);
+    }
+
+    public void setScore(String type_user){
+        String url = null;
+        if (type_user.equals("sender")){
+            url = ADRESS_SERVER + "set_score_sender.php?id_game=" + id_game + "&score=" + Integer.valueOf(mon_score);
+        }else if (type_user.equals("receiver")){
+
+            url = ADRESS_SERVER + "set_score_receiver.php?id_game=" + id_game + "&score=" + Integer.valueOf(mon_score);
+        }
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+
+            public void onResponse(String response)
+            {
+                try {
+                    JSONArray jsonArray =new JSONArray(response);
+//                    JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+//                    String invited = jsonObject1.getString("is_invited");
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                error.printStackTrace();
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError
+            {
+                Map<String,String> params = new HashMap<String, String>();
+
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    public void getScore(){
+        String url_logout_user = ADRESS_SERVER + "get_score.php?id_game=" + id_game;
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url_logout_user
+                , new Response.Listener<String>() {
+            @Override
+
+            public void onResponse(String response)
+            {
+                try {
+
+                    JSONArray jsonArray =new JSONArray(response);
+                    JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                    score_sender = jsonObject1.getInt("score_sender");
+                    score_receiver = jsonObject1.getInt("score_receiver");
+
+                    if (!type_user.equals("sender")) {
+                        if (score_receiver > score_sender) {
+                            //TODO : mettre online 0 f la table game
+                            LoserAlertDialog();
+                        } else {
+                            LoserAlertDialog();
+                        }
+                    }else{
+                        if (score_receiver > score_sender) {
+                            WinnerAlertDialog();
+                        } else {
+
+                            WinnerAlertDialog();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                error.printStackTrace();
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError
+            {
+                Map<String,String> params = new HashMap<String, String>();
+
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    ////////////////////////win dialog////////////////////////////////////////////////////////////////////
+    public void WinnerAlertDialog(){
+        winDialog = new Dialog(this);
+        winDialog.setContentView(R.layout.winner_dialog);
+
+        winDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        winIgnorer = (Button) winDialog.findViewById(R.id.win_btn);
+
+
+
+        winIgnorer.setEnabled(true);
+
+
+
+        winIgnorer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (jeton_from_pref > 0 ){
-                    String mot_a_prononce = Images_array.get(indice).getNom_image();
-                    if (mot_a_prononce == null || mot_a_prononce.length() == 0) {
-                        Toast.makeText(ImageGame.this, "some Error occured", Toast.LENGTH_SHORT).show();
-                    } else
-                        textToSpeech.speak(mot_a_prononce, TextToSpeech.QUEUE_FLUSH, null);
-
-                    jeton_from_pref -- ;
-                    jetons_user.setText(String.valueOf(jeton_from_pref));
-
-                    sharedPreferences
-                            .edit()
-                            .putInt(PREF_JETON, jeton_from_pref)
-                            .apply();
-
-                }else{
-                    ImageButton button = (ImageButton) findViewById(R.id.speak_btn);
-                    button.setEnabled(false);
-                    button.setClickable(false);
-                }
-                myDialog.cancel();
+                        finish();
             }
-
         });
+        winDialog.setCancelable(false);
+        winDialog.show();
+    }
+    ////////////////////////lose dialog////////////////////////////////////////////////////////////////////
+    public void LoserAlertDialog(){
+        loseDalog = new Dialog(this);
+        loseDalog.setContentView(R.layout.loser_dialog);
 
-        Non.setOnClickListener(new View.OnClickListener() {
+        loseDalog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        loseIgnorer = (Button) loseDalog.findViewById(R.id.lose_btn);
+        loseDalog.setCancelable(false);
+
+
+        loseIgnorer.setEnabled(true);
+
+
+
+
+        loseIgnorer.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                myDialog.cancel();
+            public void onClick(View view) {
+                finish();
             }
         });
-        myDialog.show();
+
+        loseDalog.show();
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void show_result(){
+        getScore();
+    }
+
+
+
+    //onClick Button
+    public void startClick(View view) {
+        recognizer.stop();
+        speak_btn.setBackgroundResource(R.drawable.mic_blue_round);
+        speak_btn.setEnabled(false);
+        recognizer.startListening(WORD_SEARCH, 5000);
+    }
+    //onClick Button
+    public void nextClick(View view) {
+        if (indice == Images_array.size() - 1) {
+            next_btn.setVisibility(View.GONE);
+
+            congratulation_wav.start();
+            congratulationAlertDialog();
+
+
+        }else
+            indice++;
+        cursseur_id_array_image = Images_array.get(indice).getId_image();
+        afficher_imageObject(cursseur_id_array_image);
+
+        next_btn.setVisibility(View.GONE);
     }
 }
-
-

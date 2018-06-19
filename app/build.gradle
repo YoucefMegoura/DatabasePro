@@ -37,6 +37,10 @@ dependencies {
     implementation 'com.iarcuschin:simpleratingbar:0.1.5'
     implementation 'com.github.arturogutierrez:badges:1.0.5@aar'
     implementation 'com.github.Hitomis:CircleMenu:v1.0.2'
+    implementation 'com.mcxiaoke.volley:library:1.0.0'
+    implementation 'com.koushikdutta.ion:ion:2.1.9'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.amitshekhar.android:android-networking:1.0.1'
 }
 
 ant.importBuild 'assets.xml'

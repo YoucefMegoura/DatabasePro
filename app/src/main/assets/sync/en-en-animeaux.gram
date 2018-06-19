@@ -1,0 +1,7 @@
+#JSGF V1.0;
+
+grammar english;
+
+<animals> = ant | bear | bee | cat | cow | dog | fly | bug | bull | crab | fish | frog | lion | mite | wolf | bird | corgi | deer | duck | llama | shark | snail | stork | whale | chicken | pig | spider | turtle | wasp | falcon | gorilla | horse | insect | panda | sheep | beaver | butterfly | dolphin | elephant | hornet | prawn | giraffe | ladybird | leopard | rabbit | unicorn | aquarium | mosquito | puffin bird | starfish | tentacles | badger | bumblebee | caterpillar | dinosaur | dragonfly | grasshopper | kangaroo | octopus | rhinoceros | seahorse ;
+
+public <english> = <animals> ;

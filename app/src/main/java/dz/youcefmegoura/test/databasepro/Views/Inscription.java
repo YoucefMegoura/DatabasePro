@@ -2,26 +2,39 @@ package dz.youcefmegoura.test.databasepro.Views;
 
 import android.content.Context;
 import android.content.Intent;
+
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 
-import java.util.HashMap;
-import java.util.Map;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.androidnetworking.common.Method;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import dz.youcefmegoura.test.databasepro.R;
+import dz.youcefmegoura.test.databasepro.Database.HelperMySQL;
+import es.dmoral.toasty.Toasty;
 
 public class Inscription extends AppCompatActivity {
     private EditText pseudo_ET,
@@ -29,7 +42,7 @@ public class Inscription extends AppCompatActivity {
                      mot_de_passe_ET,
                      confirmer_mot_de_passe_ET,
                      age_ET;
-    private FirebaseAuth auth_firebase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +57,6 @@ public class Inscription extends AppCompatActivity {
         age_ET = (EditText) findViewById(R.id.age_ET);
         /********************************************/
 
-        auth_firebase = FirebaseAuth.getInstance();
     }
 
 
@@ -98,28 +110,11 @@ public class Inscription extends AppCompatActivity {
             return;
         }
         if (isNetworkAvailable()) {
-            auth_firebase.createUserWithEmailAndPassword(email, mot_de_passe).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), "User registered succesfull", Toast.LENGTH_SHORT).show();
+            inscription_a_la_bd(pseudo, mot_de_passe, email, Integer.parseInt(age));
+            Intent intent = new Intent(Inscription.this, Connexion.class);
+            startActivity(intent);
+            Toasty.success(Inscription.this, "Inscription effectuée", Toast.LENGTH_SHORT).show();
 
-
-                        startActivity(new Intent(Inscription.this, Connexion.class));
-                        String user_id = auth_firebase.getCurrentUser().getUid();
-                        DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("user").child(user_id);
-
-                        Map newPost = new HashMap();
-                        newPost.put("username", pseudo);
-                        newPost.put("age", Integer.valueOf(age));
-                        newPost.put("score", 0);
-
-
-                        current_user_db.setValue(newPost);
-                    } else
-                        Toast.makeText(getApplicationContext(), "Some error occured", Toast.LENGTH_SHORT).show();
-                }
-            });
         }
     }
 
@@ -140,5 +135,70 @@ public class Inscription extends AppCompatActivity {
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return (activeNetworkInfo != null && activeNetworkInfo.isConnected());
+    }
+
+    public void inscription_a_la_bd(String pseudo, String password, String email, int age){
+
+        String password_hashed = sha1(password);
+
+        String url_create_user = HelperMySQL.ADRESS_SERVER + "create_user.php?pseudo=" + pseudo + "&password=" + password_hashed + "&email=" + email + "&age=" + age;
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url_create_user, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+                            String if_success = jsonObject.getString("code");
+                            Toast.makeText(Inscription.this, jsonArray.toString(), Toast.LENGTH_SHORT).show();
+
+                            if (if_success.equals("OK")){
+                                Intent intent = new Intent(Inscription.this, Connexion.class);
+                                startActivity(intent);
+                                Toasty.success(Inscription.this, "Inscription effectuée", Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toasty.error(Inscription.this, "Inscription echouée", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.i("Error.Response", "zfef");
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("Error.Response", "zfef");
+                    }
+                }
+        );
+
+        queue.add(stringRequest);
+    }
+
+    public static String getHash(String txt, String hashType) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance(hashType);
+            byte[] array = md.digest(txt.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
+            }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+            // error action
+        }
+        return null;
+    }
+
+    public static String md5(String txt) {
+        return getHash(txt, "MD5");
+    }
+
+    public static String sha1(String txt) {
+        return getHash(txt, "SHA1");
     }
 }

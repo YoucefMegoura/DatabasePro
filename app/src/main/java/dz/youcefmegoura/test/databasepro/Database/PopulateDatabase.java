@@ -25,16 +25,30 @@ public class PopulateDatabase {
                 break;
 
             case "french.db":
-                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (1, 'de', 0); ");
-                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (2, 'fr', 0); ");
-                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (3, 'fr', 0)" );
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (1, 'Animaux', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (2, 'Gastronomie', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (3, 'Ecole', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (4, 'Pays', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (5, 'Maison', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (6, 'Paysage', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (7, 'Social', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (8, 'Sport', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (9, 'Voyage', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (10, 'Medecine', 0);");
                 break;
 
 
             case "german.db":
-                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (1, 'grde', 0); ");
-                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (2, 'grfr', 0); ");
-                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (3, 'grfr', 0)" );
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (1, 'Animaux', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (2, 'Gastronomie', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (3, 'Ecole', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (4, 'Pays', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (5, 'Maison', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (6, 'Paysage', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (7, 'Social', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (8, 'Sport', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (9, 'Voyage', 0);");
+                db.execSQL("INSERT INTO categorie (id_categorie, nom_categorie, score_categorie) VALUES (10, 'Medecine', 0);");
                 break;
         }
 

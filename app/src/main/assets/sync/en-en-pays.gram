@@ -1,0 +1,7 @@
+#JSGF V1.0;
+
+grammar english;
+
+<pays> = algeria | antigua and barbuda | armenia | aruba | australia | bahamas | bahrain | bangladesh | belgium | benin | botswana | brazil | bulgaria | burkina faso | burundi | cameroon | canada | chile | china | colombia | comoros | cook islands | cuba | czech republic | denmark | djibouti | east timor | european union | finland | france | georgia | germany | ghana | great britain | greece | greenland | guernsey | guinea bissau | guyana | honduras | hungary | iceland | india | indonesia | ireland | israel | italy | jamaica | japan | jordan | kuwait | laos | lithuania | luxembourg | madagascar | maldives | malta | mauritius | morocco | mozambique | namibia | new zealand | niger | nigeria | north korea | norway | pakistan | palau | palestine | panama | philippines | poland | qatar | republic of macedonia | republic of the congo | romania | russia | sao tome and principe | senegal | sierra leone | slovakia | somalia | south africa | south korea | spain | sudan | suriname | sweden | switzerland | syria | tanzania | thailand | togo | trinidad and tobago | turkey | ukraine | united arab emirates | united states of america | vietnam | yemen ;
+
+public <english> =  <pays> ;

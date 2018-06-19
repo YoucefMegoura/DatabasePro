@@ -1,0 +1,7 @@
+#JSGF V1.0;
+
+grammar english;
+
+<social> = behance | blogger | delicious | deviantart | digg | dislike | dribbble | dropbox | envato | facebook | flickr | forrst | foursquare | github | google drive | google plus | hangouts | happy | instagram | kickstarter | lastfm | like | linkedin | messenger | myspace | path | photo | picasa | pinterest | plurk | reddit | rss | skype | snapchat | soundcloud | spotify | stumbleupon | team viewer | tumblr | twitch | twitter | viddler | vimeo | vine | wattpad | whatsapp | wordpress | xing | yahoo | youtube | zootool;
+
+public <english> =  <social> ;

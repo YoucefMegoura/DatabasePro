@@ -34,11 +34,7 @@ public class Dashboared extends AppCompatActivity {
     }
 
     public void multijouer_btn(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString("DB_NAME", "english.db");
-        Intent intent = new Intent(this, ListeCategories.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        finish();
     }
 
     public void choisir_langue_btn(View view) {

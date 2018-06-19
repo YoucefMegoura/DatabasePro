@@ -1,7 +1,17 @@
 cmudict-en-us.dict
 cmudict-fr-fr.dict
 cmudict-gr-gr.dict
+en-en-animeaux.gram
+en-en-ecole.gram
 en-en-first.gram
+en-en-gastronomie.gram
+en-en-maison.gram
+en-en-medecine.gram
+en-en-pays.gram
+en-en-paysage.gram
+en-en-social.gram
+en-en-sport.gram
+en-en-voyage.gram
 en-us-ptm/README
 en-us-ptm/feat.params
 en-us-ptm/mdef

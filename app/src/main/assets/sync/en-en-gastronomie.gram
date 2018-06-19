@@ -1,0 +1,7 @@
+#JSGF V1.0;
+
+grammar english;
+
+<gastronomy> = apple | asparagus | aubergine | avocado | bacon | baguette | banana | beans | biscuit | blueberries | boiled | bowl | bread | broccoli | butcher | butter | cabbage | cake | can | candy | carrot | cauliflower | cereals | cheese | chef | cherries | chili | chips | chives | chocolate | coconut | coffee | maker | coffee | cookies | corckscrew | corn | corndog | croissant | cucumber | cup | cupcake | cutlery | dairy | dish | dishes | doughnut | egg | eggs | fig | fish | flour | food | fork | frappe | fries | garlic | gingerbread | glass | grain | grapes | grater | grinder | groceries | ham | hamburguer | hazelnut | honey | hot | dog | ice | cream | jam | jawbreaker | jelly | kebab | kitchen | knife | knives | ladle | lemon | lime | meat | milk | mixer | mug | mushroom | mushrooms | mustard | noodles | oat | octopus | oil | olives | onion | orange | ornating | pan | pancakes | pasta | peach | pear | peas | pepper | pickles | pie | pineapple | pint | pistachio | pizza | pomegranate | popsicle | pot | potatoes | pretzel | pudding | pumpkin | radish | raspberry | rice | risotto | rolling | pin | salad | salami | salmon | salt | sandwich | sausage | scale | seeds | shrimp | slotted | spoon | sorbet | spaguetti | spatula | spices | spoon | steak | stew | strainer | strawberry | sushi | taco | tea | teapot | tenderizer | thermos | toast | toaster | toffee | tomato | turkey | water | watermelon | whisk | wrap;
+
+public <english> =  <gastronomy> ;

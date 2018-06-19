@@ -1,0 +1,7 @@
+#JSGF V1.0;
+
+grammar english;
+
+<voyage> = action camera | airplane | backpack | balloon | beach | binoculars | bus | calendar | camera | camping tent | cloudy | cocktail | compass | crab | credit card | cruise | deck chair | destination | dinner table | exchange | flip flops | gps | guide | hotel | insurance | landmark | limousine | luggage | map | mask | monuments | mountain | navigation | passport | photo | plane tickets | plane | plug | postcard | restaurant | sand bucket | scooter | signpost | snorkel | souvenir | suitcase | sunglasses | sunset | swimming pool | take off | taxi | ticket | tourist | train | travel | trekking | umbrella | wallet ;
+
+public <english> =  <voyage> ;

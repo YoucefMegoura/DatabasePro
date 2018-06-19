@@ -1,0 +1,7 @@
+#JSGF V1.0;
+
+grammar english;
+
+<maison> = air conditioner | alarm clock | armchair | bathroom | bathtub | bidet | blade | blender | boiler | bowl | broom | butcher | chair | coffee machine | coffee maker | computer | corkscrew | couch | cupboard | desk | dishwasher | drawers | driller | dustpan | extractor | fan | fax | fence | food steamer | fork | fridge | frying pan | glove | grater | hairdryer | headphones | iron | juicer | knife | liquid soap | livingroom | microwave | mirror | mitten | mixer | oven | peeler | photo camera | pizza knife | plate | plunger | pot | printer | radio | rice cooker | rolling pin | router | scale | sewing machine | shaver | shower head | sink | soap | spatula | spoon | stool | stove | strainer | tea pot | teapot | television | toaster | toilet paper | toilet | towel | vacuum cleaner | washing machine | water heater | water tap | whisk  ;
+
+public <english> = <maison> ;

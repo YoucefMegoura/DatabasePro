@@ -86,39 +86,39 @@ public class ShareScore extends AppCompatActivity {
 
 
     }
-    ////////////////////exit menu toolbar///////////////////////
-    public void CustomAlertDialog(){
-        myDialog = new Dialog(this);
-        myDialog.setContentView(R.layout.exit_dialog);
 
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        public void CustomAlertDialog(){
+            myDialog = new Dialog(this);
+            myDialog.setContentView(R.layout.exit_dialog);
 
-        yes = (Button) myDialog.findViewById(R.id.yes_btn);
-        no = (Button) myDialog.findViewById(R.id.no_btn);
+            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-
-        yes.setEnabled(true);
-        no.setEnabled(true);
+            yes = (Button) myDialog.findViewById(R.id.yes_btn);
+            no = (Button) myDialog.findViewById(R.id.no_btn);
 
 
-        yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                moveTaskToBack(true);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);
+            yes.setEnabled(true);
+            no.setEnabled(true);
 
-            }
-        });
 
-        no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.cancel();
-            }
-        });
-        myDialog.show();
-    }
+            yes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    moveTaskToBack(true);
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                    System.exit(1);
+
+                }
+            });
+
+            no.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.cancel();
+                }
+            });
+            myDialog.show();
+        }
 
     ////////////////////////////////////////////////////////////////////////////////
 

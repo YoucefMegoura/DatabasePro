@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     // onCLick Button
     public void commencer_click(View view) {
         startActivity(new Intent(this, Dashboared.class));
-        finish();
+
     }
 
     public void sinscrire_click(View view) {

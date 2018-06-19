@@ -1,0 +1,7 @@
+#JSGF V1.0;
+
+grammar english;
+
+<sport> = american football | archery | badminton | ballet | baseball | basketball jersey | basketball | bicycle | boot | bottle | bowling | boxing ring | boxing shorts | boxing | chess | cricket | cup | curling | cycling | darts | dumbbell | eight  ball | fishing | football jersey | glove | goggles | golf | hiking | hockey | ice skating | jumping rope | karate | kayak | lacrosse | locker | measuring  tape | medal | muscle | olympic games | ping pong | podium | pool | punch | racing | referee | roller skate | rowing | rugby | scoreboard | skateboard | soccer jersey | soccer | stationary bike | stopwatch | strength | surf | tactics | target | tennis ball | tennis | torch | trampoline | treadmill | volleyball | waterpolo | weight | whistle | world cup | yachting | yoga;
+
+public <english> = <sport> ;

@@ -1,0 +1,7 @@
+#JSGF V1.0;
+
+grammar english;
+
+<medecine> = anesthesia | antibiotic | arm | articulation | bacteria | band aid | blood | bone | braces | brain | canine | cardiogram | caries | crutches | dental drill | dental floss | dna | dropper | drugs | ear | earbuds | edema | electric toothbrush | epidermis | extraction | eye drops | eye | femur | finger | first aid kit | fit | gum | hammer | heart | implants | inhalator | intestines | iris | kidney | knee | kneecap | liver | lozenge | lungs 2 | lungs | medical records | medicine | microbe | mirror | molar 3 | molar | nose | notepad | ointment | optical | otoscope | pancreas | perfusion | pills | plastered foot | records | ribbon | scalpel | scissors | skeleton | skull | spinal column | stethoscope | stomach | syringe | tablets | teeth | thermometer | thin | tonsils tester | tooth brush | tooth pliers | tweezers | virus | wheelchair | x ray;
+
+public <english> =  <medecine>;

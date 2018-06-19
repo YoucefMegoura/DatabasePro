@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="dz.youcefmegoura.test.databasepro.Views.OnlineGame"
+    android:background="#e5f2f2f2"
+    >
+    <ImageView
+        android:id="@+id/image_categorie"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        />
+    <TextView
+        android:id="@+id/name_categorie_from_bundle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Multijoueur"
+        android:textSize="25dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="60dp"
+        android:textStyle="bold"
+        />
+
+    <ImageView
+
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="320dp"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/crown" />
+
+    <TextView
+        android:id="@+id/score_tout_categorie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="18dp"
+        android:layout_marginTop="30dp"
+        android:text="18"
+        android:textSize="15dp"
+        android:textColor="#403c3c"/>
+
+    <ImageView
+
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="270dp"
+        android:src="@drawable/jeton" />
+
+
+    <TextView
+        android:id="@+id/jetons_user"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="285dp"
+        android:layout_marginTop="30dp"
+        android:text="8"
+        android:textSize="15dp"
+        android:textColor="#403c3c"/>
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="48dp"
+        android:background="@mipmap/closebar"
+        android:onClick="closeBtn"
+        />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="280dp"
+        android:layout_height="5dp"
+        android:id="@+id/progress"
+        android:layout_marginTop="75dp"
+        android:layout_marginLeft="45dp"
+        android:progress="30"
+        android:minHeight="30dp"
+        android:progressDrawable="@drawable/horizental_progressbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+
+            android:id="@+id/score_text_view"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="260dp"
+            android:layout_marginTop="100dp"
+            android:paddingTop="20dp"
+            android:paddingLeft="15dp"
+            android:text="10/10"
+            android:textStyle="bold"
+            android:textColor="#4dc0f7"
+            android:background="@drawable/shape_score"/>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shape_image"
+            android:layout_marginLeft="25dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/speakIt_btn"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="55dp"
+                    android:clickable="true"
+                    android:onClick="SpeakIt_Click"
+                    android:src="@mipmap/hautparleur"
+                    app:cb_color="#c7c6c6"
+                    app:cb_pressedRingWidth="8dp"
+                    tools:ignore="OnClick" />
+                <TextView
+                    android:id="@+id/nom_image_textView"
+                    android:layout_width="200dp"
+                    android:layout_height="60dp"
+                    android:text="Avocado"
+                    android:paddingTop="15dp"
+                    android:paddingLeft="20dp"
+                    android:textSize="20dp"
+                    android:textStyle="italic"
+                    android:textColor="#403c3c"/>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="60dp"
+                android:src="@drawable/avocado"
+
+                />
+
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/speak_btn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/mic_round"
+            android:text="Speak"
+            android:onClick="startClick"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="150dp"
+
+
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/next_btn"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/nextbtn"
+                android:onClick="nextClick" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

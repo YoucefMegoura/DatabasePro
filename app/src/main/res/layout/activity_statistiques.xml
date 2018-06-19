@@ -36,11 +36,16 @@
         android:layout_height="180dp"
         android:background="@drawable/button_sinscrire_jaiuncompte">
 
-    <ImageView
-        android:layout_width="180dp"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="110dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="40dp"
+        android:text="Satistiques"
+        android:textStyle="bold"
+        android:textSize="45dp"
+        android:gravity="center"
+        android:textColor="#ffffff"/>
         <!--android:src="@drawable/statistique"-->
 
     </RelativeLayout>

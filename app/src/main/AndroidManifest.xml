@@ -17,24 +17,29 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Views.MainActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".Views.ListeCategories"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Views.Menu.AboutUs"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
-        <activity android:name=".Views.ListeNiveaux"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Views.ImageGame"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Views.Connexion"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".Views.ListeCategories"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.Menu.AboutUs"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
-        <activity android:name=".Views.Inscription"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".Views.ListeNiveaux"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.ImageGame"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.Connexion"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".Views.Inscription"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Views.SplashScreen"
             android:screenOrientation="portrait"
@@ -45,11 +50,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Views.MotDePasseOublie"
+        <activity
+            android:name=".Views.MotDePasseOublie"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
-        <activity android:name=".Views.ChoisirLangue"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".Views.ChoisirLangue"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Views.Dashboared"
             android:screenOrientation="portrait"
@@ -57,13 +64,15 @@
         <activity
             android:name=".Views.SettingsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".Views.ShareScore" />
+        <!-- android:theme="@style/Theme.AppCompat.NoActionBar" -->
+        android:screenOrientation="portrait"/>
         <activity
-            android:name=".Views.ShareScore"/>
-            <!--android:theme="@style/Theme.AppCompat.NoActionBar"-->
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Views.Statistiques"
-            android:screenOrientation="portrait"></activity>
+            android:name=".Views.Statistiques"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Views.Salon" />
+        <activity android:name=".Views.OnlineGame"></activity>
     </application>
 
 </manifest>

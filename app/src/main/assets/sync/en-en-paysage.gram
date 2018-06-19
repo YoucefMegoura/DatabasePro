@@ -1,0 +1,7 @@
+#JSGF V1.0;
+
+grammar english;
+
+<paysage> = amsterdam | amusement park | barcelona | barn | beach | bridge | castle | circus | city | coast | colosseum | desert | dune | easter island | factory | field | flat | forest | fountain | grand canyon | hangar | hills | home | hot air balloon | igloo | indian | island | lake | lighthouse | london | mill | moscow | mountain | mountains | paris | park | parthenon | pyramids | road | sydney | taj mahal | toronto | ufo | vaticano | village | volcano | water | waterfall ;
+
+public <english> =  <paysage> ;
